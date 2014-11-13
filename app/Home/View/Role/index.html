@@ -1,0 +1,146 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="row">
+        <include file="Public:sidebar" />
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row d-nav">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#">角色管理</a></li>
+                    <li><a data-toggle="modal" data-target="#addModal" data-uri="{:U('Role/add')}" href="#">添加角色</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>角色名称</th>
+                        <th>角色描述</th>
+                        <th>状态</th>
+                        <th>排序</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="lists" id="list">
+                    <tr>
+                        <td>{$list.name}</td>
+                        <td>{$list.remark}</td>
+                        <td>{$list.status}</td>
+                        <td>{$list.sort}</td>
+                        <td><a class="editrole" data-toggle="modal" data-target="#editModal" data-uri="{:U('Role/edit',array('id'=>$list['id']))}" href="#">修改</a> | <a class="delrole" data-toggle="modal" data-target="#delModal" data-uri="{:U('Role/ajax_del',array('id'=>$list['id']))}" href="#">删除</a></td>
+                    </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- addModal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加角色</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="addRoleForm" class="d-form form-horizontal" action="{:U('Role/add')}" method="post">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="name">角色名称</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="name" name="name" placeholder="角色名称" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="status">状态</label>
+                <div class="col-md-10">
+                    <label class="radio-inline"><input type="radio" name="status" value="1" checked="checked" />开启</label>
+                    <label class="radio-inline"><input type="radio" name="status" value="0"/>关闭</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="sort">排序</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="sort" name="sort" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="remark">描述</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" id="remark" name="remark" placeholder="描述信息"></textarea>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="addrole" type="button">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- editModal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+        <h4 class="modal-title" id="myModalLabel">编辑角色</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="editrole" type="button">更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delModal -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+        <h4 class="modal-title" id="myModalLabel">消息提示</h4>
+      </div>
+      <div class="modal-body">确认删除吗？</div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
+        <button class="btn btn-primary" id="delrole" type="button">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(function(){
+    $('#addrole').on('click',function(){
+        $('#addRoleForm').submit();
+    });
+    $('#editrole').on('click',function(){
+        $('#editRoleForm').submit();
+    });
+    $('.editrole').on('click',function(){
+        $.get($(this).attr('data-uri'),function(data){
+            $('#editModal .modal-body').html(data);
+        })
+    });
+    $('.table').on('click','[data-target=#delModal]',function(){
+        $('#delModal .modal-dialog').css('width','220');
+        var that=$(this);
+        $('#delrole').on('click',function(){
+            $.get(that.attr('data-uri'),function(rel){
+                $('#delModal').modal('hide');
+                if(rel.status){
+                    that.parent().parent().fadeOut('slow',function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert('删除失败');
+                    exit;
+                }
+            });
+        });
+    });
+});
+</script>
+<include file="Public:footer" />

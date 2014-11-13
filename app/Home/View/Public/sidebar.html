@@ -7,9 +7,9 @@
         <li <if condition="$curr eq 'artcate'">class="active"</if>><a href="{:U('articlecategory/index')}">分类管理</a></li>
         <li <if condition="$curr eq 'artcate_add'">class="active"</if>><a href="{:U('articlecategory/add')}">添加分类</a></li>
     </ul>
-    <!-- <ul class="nav nav-sidebar">
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-    </ul> -->
+    <ul class="nav nav-sidebar">
+        <li><a href="{:U('User/index')}">用户管理</a></li>
+        <li><a href="{:U('Role/index')}">角色管理</a></li>
+        <li><a href="{:U('Node/index')}">权限设置</a></li>
+    </ul>
 </div>

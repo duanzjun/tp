@@ -21,5 +21,6 @@ body{padding-top:50px;}
 .d-nav{margin-bottom:15px;}
 #d-container{width:900px;height:320px;margin-bottom:50px;display:inline-block;}
 .d-f-c{width:230px;display:inline-block;}
+.d-form .form-control{width:auto;}
 .d-label{width:80px;text-align:right;margin-right:8px;}
 .d-cursor{cursor:pointer;}

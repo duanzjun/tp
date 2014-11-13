@@ -1,12 +1,12 @@
-<include file="Public:header" />
+<include file="Public:header"/>
 <div class="container-fluid">
     <div class="row">
         <include file="Public:sidebar" />
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row d-nav">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li><a href="{:U('index/index')}">文章管理</a></li>
-                    <li class="active"><a href="#">添加文章</a></li>
+                    <li><a href="{:U('User/index')}">用户管理</a></li>
+                    <li class="active"><a href="#">编辑用户</a></li>
                 </ul>
             </div>
             <div class="row">
@@ -58,14 +58,4 @@
         </div>
     </div>
 </div>
-<script src="__STATIC__/js/ueditor/ueditor.config.js"></script>
-<script src="__STATIC__/js/ueditor/ueditor.all.js"></script>
-<script>
-    var ue = UE.getEditor('d-container',{
-    toolbars: [
-        ['fullscreen', 'source', 'undo', 'redo', 'bold']
-    ],
-    autoHeight: true
-    });
-</script>
-<include file="footer" />
+<include file="Public:footer"/>
