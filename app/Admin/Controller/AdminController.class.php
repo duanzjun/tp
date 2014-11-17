@@ -7,8 +7,7 @@ class AdminController extends Controller
     {
         //后台用户权限检查
         if(C('USER_AUTH_ON') && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))){
-            $rbac=new \Org\Util\Rbac;
-            if(!$rbac::AccessDecision()){
+            if(!\Org\Util\Rbac::AccessDecision()){
                 //检查认真识别号
                 if(!$_SESSION[C('USER_AUTH_KEY')]){
                     //跳转到认证网关

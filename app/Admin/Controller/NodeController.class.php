@@ -1,5 +1,5 @@
 <?php
-namespace Home\Controller;
+namespace Admin\Controller;
 use Think\Controller;
 class NodeController extends Controller
 {
@@ -25,6 +25,20 @@ class NodeController extends Controller
         $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
         $tree->init($node_array);
+        $html_tree = $tree->get_tree(0, $str);
+        $this->assign('html_tree',$html_tree);
+        $this->display();
+    }
+
+    public function add()
+    {
+        $node_mod=M('Node');
+        $lists=$node_mod->select();
+        $tree=new \Org\Util\Tree;
+        $str="<option value='\$id'>\$spacer\$title</option>";
+        $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
+        $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+        $tree->init($lists);
         $html_tree = $tree->get_tree(0, $str);
         $this->assign('html_tree',$html_tree);
         $this->display();

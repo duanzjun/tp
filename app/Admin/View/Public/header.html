@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="__STATIC__/css/base.css">
 <script src="__STATIC__/js/jquery.js"></script>
 <script src="__STATIC__/js/bootstrap.js"></script>
+<script src="__STATIC__/js/common.js"></script>
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -21,9 +22,11 @@
             <li><a href="#">订单</a></li>
             <li><a href="#">设置</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="glyphicon glyphicon-user"><span>DanJun</span></a></li>
+            <li><a class="glyphicon glyphicon-envelope" href="#"></a></li>
+            <li><a class="glyphicon glyphicon-log-out" href="{:U('login/logout')}" title="退出"></a></li>
+          </ul>
         </div>
     </div>
 </div>

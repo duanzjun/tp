@@ -27,7 +27,7 @@
                         <td>{$list.remark}</td>
                         <td>{$list.status}</td>
                         <td>{$list.sort}</td>
-                        <td><a class="editrole" data-toggle="modal" data-target="#editModal" data-uri="{:U('Role/edit',array('id'=>$list['id']))}" href="#">修改</a> | <a class="delrole" data-toggle="modal" data-target="#delModal" data-uri="{:U('Role/ajax_del',array('id'=>$list['id']))}" href="#">删除</a></td>
+                        <td><a class="editrole" data-toggle="modal" data-target="#editModal" data-uri="{:U('Role/edit',array('id'=>$list['id']))}" href="#">修改</a> | <a onclick="delitem(this)" data-uri="{:U('Role/ajax_del',array('id'=>$list['id']))}" href="#">删除</a></td>
                     </tr>
                     </volist>
                     </tbody>
@@ -103,10 +103,12 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
         <h4 class="modal-title" id="myModalLabel">消息提示</h4>
       </div>
-      <div class="modal-body">确认删除吗？</div>
+      <div class="modal-body">确认删除吗？
+      <input type="hidden" name="uri" />
+      </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
-        <button class="btn btn-primary" id="delrole" type="button">确定</button>
+        <button class="delrolebtn btn btn-primary" type="button">确定</button>
       </div>
     </div>
   </div>
@@ -124,23 +126,30 @@ $(function(){
             $('#editModal .modal-body').html(data);
         })
     });
-    $('.table').on('click','[data-target=#delModal]',function(){
-        $('#delModal .modal-dialog').css('width','220');
-        var that=$(this);
-        $('#delrole').on('click',function(){
-            $.get(that.attr('data-uri'),function(rel){
-                $('#delModal').modal('hide');
-                if(rel.status){
-                    that.parent().parent().fadeOut('slow',function(){
-                        $(this).remove();
-                    });
-                }else{
-                    alert('删除失败');
-                    exit;
-                }
-            });
+
+    $('.delrolebtn').on('click',function(){
+        $('#delModal').modal('hide');
+        var uri=$('#delModal .modal-body input[name=uri]').val();
+        console.info(uri);
+        $.get(uri+'&u='+Math.random(1000),function(rel){
+            $('#delModal').modal('hide');
+            if(rel.status){
+                that.parent().parent().fadeOut('slow',function(){
+                    $(this).remove();
+                });
+            }else{
+                alert('删除失败');
+            }
         });
     });
+    $('#delModal').on('hide.bs.modal',function(){
+        $('#delModal .modal-body input[name=uri]').val('');
+    });
 });
+function delitem(obj)
+{
+    $('#delModal').modal('show');
+    $('#delModal .modal-body input[name=uri]').val($(obj).attr('data-uri'));
+}
 </script>
 <include file="Public:footer" />

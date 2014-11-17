@@ -13,7 +13,9 @@ return array(
     'USER_AUTH_ON' => true, //是否需要认证
     'USER_AUTH_TYPE' => 1, //认证类型 1 登录认证 2 实时认证
     'USER_AUTH_KEY' => 'authId', //认证识别号
+    'USER_AUTH_MODEL' => 'user', //
     'ADMIN_AUTH_KEY' => 'administrator',
+    'SPECIAL_USER' => 'admin',
     'REQUIRE_AUTH_MODULE' => '', // 需要认证模块
     'NOT_AUTH_MODULE' => 'Login,Public', //无需认证模块
     'USER_AUTH_GATEWAY' => '/Admin/Login', //认证网关

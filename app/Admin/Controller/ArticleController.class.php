@@ -4,7 +4,7 @@ use Think\Controller;
 
 class ArticleController extends AdminController
 {
-   public function index()
+    public function index()
     {
         $model = M('Article');
         $result=$model->order('add_time DESC')->page(I('get.p',0,'intval').',10')->select();
