@@ -21,6 +21,32 @@ class RoleController extends Controller
         $this->error('添加角色失败');
     }
 
+    /**
+     * 分组权限设置
+    */
+    public function set_priv()
+    {
+        if(IS_POST){
+
+        }else{
+            $id=I('get.id',0,'intval');
+            $access=M('Access')->where('role_id='.$id)->select();
+            $node_mod=M('Node');
+            $lists=$node_mod->where('status=1')->select();
+            if(!empty($access)){
+
+            }
+            $tree=new \Org\Util\Tree;
+            $str="<tr><td id='node-\$id' class='child-node-\$pid'>\$spacer <input type='checkbox' onclick='checknode(this)' level='\$level' name='node_id[]' value='\$id'/> \$title(\$name)</td></tr>";
+            $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
+            $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+            $tree->init($lists);
+            $html_tree = $tree->get_tree(0, $str);
+            $this->assign('html_tree',$html_tree);
+            $this->display('priv');
+        }
+    }
+
     public function edit()
     {
         $role_mod=M('Role');
@@ -48,7 +74,6 @@ class RoleController extends Controller
         $user=M('User')->where('role='.$id)->find();
         trace('333333333333333');
         if(empty($roleuser) && empty($user)){
-            trace('22222');
             // M('Role')->delete($id);
             $this->ajaxReturn(true);
         }

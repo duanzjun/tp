@@ -27,7 +27,7 @@
                         <td>{$list.remark}</td>
                         <td>{$list.status}</td>
                         <td>{$list.sort}</td>
-                        <td><a class="editrole" data-toggle="modal" data-target="#editModal" data-uri="{:U('Role/edit',array('id'=>$list['id']))}" href="#">修改</a> | <a onclick="delitem(this)" data-uri="{:U('Role/ajax_del',array('id'=>$list['id']))}" href="#">删除</a></td>
+                        <td><a onclick="setpriv(this)" d-uri="{:U('role/set_priv',array('id'=>$list['id']))}" href="#">权限设置</a> | <a class="editrole" data-toggle="modal" data-target="#editModal" data-uri="{:U('Role/edit',array('id'=>$list['id']))}" href="#">修改</a> | <a onclick="delitem(this)" data-uri="{:U('Role/ajax_del',array('id'=>$list['id']))}" href="#">删除</a></td>
                     </tr>
                     </volist>
                     </tbody>
@@ -89,9 +89,18 @@
       </div>
       <div class="modal-body">
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" id="editrole" type="button">更新</button>
+    </div>
+  </div>
+</div>
+<!-- privModal -->
+<div class="modal fade" id="privModal" tabindex="-1" role="dialog" aria-labelledby="privModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+        <h4 class="modal-title" id="privModalLabel">权限设置</h4>
       </div>
+      <div class="modal-body">Loading...</div>
     </div>
   </div>
 </div>
@@ -118,9 +127,6 @@ $(function(){
     $('#addrole').on('click',function(){
         $('#addRoleForm').submit();
     });
-    $('#editrole').on('click',function(){
-        $('#editRoleForm').submit();
-    });
     $('.editrole').on('click',function(){
         $.get($(this).attr('data-uri'),function(data){
             $('#editModal .modal-body').html(data);
@@ -146,10 +152,18 @@ $(function(){
         $('#delModal .modal-body input[name=uri]').val('');
     });
 });
+function setpriv(obj)
+{
+  $('#privModal').modal('show');
+  $.get($(obj).attr('d-uri'),function(data){
+      $('#privModal .modal-body').html(data);
+  });
+}
 function delitem(obj)
 {
     $('#delModal').modal('show');
     $('#delModal .modal-body input[name=uri]').val($(obj).attr('data-uri'));
 }
+
 </script>
 <include file="Public:footer" />
