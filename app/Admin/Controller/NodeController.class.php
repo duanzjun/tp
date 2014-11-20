@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class NodeController extends Controller
+class NodeController extends AdminController
 {
     public function index()
     {

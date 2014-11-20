@@ -71,6 +71,7 @@ class ArticleController extends AdminController
 
     public function del()
     {
+        var_dump($_SESSION['_ACCESS_LIST']);exit;
         $id=I('get.id',0,'intval');
         $article_mod=M('Article');
         $data=$article_mod->where('id='.$id)->delete();

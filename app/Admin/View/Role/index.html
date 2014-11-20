@@ -155,7 +155,7 @@ $(function(){
 function setpriv(obj)
 {
   $('#privModal').modal('show');
-  $.get($(obj).attr('d-uri'),function(data){
+  $.get($(obj).attr('d-uri')+'&t='+(Math.random()),function(data){
       $('#privModal .modal-body').html(data);
   });
 }

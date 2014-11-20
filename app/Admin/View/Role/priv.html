@@ -1,5 +1,6 @@
-<form role="form" action="" method="post">
-    <table class="table table-hover">
+<form role="form" action="{:U('role/set_priv')}" method="post">
+    <input type="hidden" name="id" value="{$id}" />
+    <table class="table table-bordered table-hover">
         {$html_tree}
     </table>
     <div class="form-group">
