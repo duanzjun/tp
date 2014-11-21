@@ -19,7 +19,6 @@ class UserController extends AdminController
             $user_mod=M('User');
             if($user_mod->create()){
                 $user_mod->password=md5($user_mod->password);
-                $user_mod->create_time=time();
                 $user_id=$user_mod->add();
                 if($user_id){
                     $data['user_id']=$user_id;

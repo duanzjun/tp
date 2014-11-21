@@ -7,7 +7,7 @@ class ArticleController extends AdminController
     public function index()
     {
         $model = M('Article');
-        $result=$model->order('add_time DESC')->page(I('get.p',0,'intval').',10')->select();
+        $result=$model->order('order_sort ASC,id DESC')->page(I('get.p',0,'intval').',10')->select();
         $count=$model->count();
         $Page=new \Think\Page($count,10);
         $Page->setConfig('prev','上一页');
@@ -22,19 +22,20 @@ class ArticleController extends AdminController
     public function add()
     {
         if(IS_POST){
-            extract($_POST);
-            $data['add_time']=time();
-            if($data['cate_id']>0)
-                $category=M('Article_category')->find($data['cate_id']);
-            if(empty($category))
-                 $this->error('分类不存在');
-            $data['cate_name']=$category['cate_name'];
-            M('Article')->add($data);
-            redirect(U('index/index'));
+            $article_mod=D('Article');
+            if($article_mod->create()){
+                $article_mod->cate_name=M('Category')->where('id='.$article_mod->cate_id)->getField('cate_name');
+                if(false!==$article_mod->add()){
+                    $this->success('文章添加成功',U('article/index'));
+                }else{
+                    $this->error('文章添加失败');
+                }
+            }else{
+                $this->error($article_mod->getError());
+            }
         }else{
-            $art_cate_mod=D('Articlecategory');
-            $categories=$art_cate_mod->get_all();
-            $this->assign('categories',$categories);
+            $html_tree=D('Common/Category')->getTreeOption();
+            $this->assign('html_tree',$html_tree);
             $this->assign('curr','index_add');
             $this->display();
         }
@@ -43,35 +44,29 @@ class ArticleController extends AdminController
     public function edit()
     {
         $id=I('get.id',0,'intval');
-        $article_mod = M('Article');
-
+        $article_mod=D('Article');
         if(IS_POST){
-            extract($_POST);
-            if($data['cate_id']>0)
-                $category=M('Article_category')->find($data['cate_id']);
-            if(empty($category))
-                $this->error('分类不存在');
-            $data['cate_name']=$category['cate_name'];
-            $article_mod->where('id='.$id)->save($data);
-            $this->success('编辑成功',U('index/index'));
+            if($article_mod->create()){
+                $article_mod->cate_name=M('Category')->where('id='.$article_mod->cate_id)->getField('cate_name');
+                if(false!==$article_mod->where('id='.$id)->save()){
+                    $this->success('文章编辑成功',U('article/index'));
+                }else{
+                    $this->error('文章保存失败');
+                }
+            }else{
+                $this->error($article_mod->getError());
+            }
         }else{
             $result=$article_mod->where('id='.$id)->find();
-            $art_cate_mod=D('Articlecategory');
-            $categories=$art_cate_mod->get_all();
-            // foreach($categories as $key=>$val){
-
-            // }
-
-
+            $html_tree=D('Common/Category')->getTreeOption($result['cate_id']);
+            $this->assign('html_tree',$html_tree);
             $this->assign('result',$result);
-            $this->assign('categories',$categories);
             $this->display();
         }
     }
 
     public function del()
     {
-        var_dump($_SESSION['_ACCESS_LIST']);exit;
         $id=I('get.id',0,'intval');
         $article_mod=M('Article');
         $data=$article_mod->where('id='.$id)->delete();

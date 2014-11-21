@@ -5,39 +5,28 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row d-nav">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#">文章管理</a></li>
-                    <li><a href="{:U('article/add')}">添加文章</a></li>
+                    <li class="active"><a href="#">分类管理</a></li>
+                    <li><a href="{:U('category/add')}">添加分类</a></li>
                 </ul>
             </div>
             <div class="row">
-                <table class="table table-bordered table-hover table-striped">
+                <a href="#" class="delall">批量删除</a>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" />全选</th>
-                    <th>标题</th>
-                    <th>分类</th>
+                    <th><input id="checkedall" class="checkedall" type="checkbox" /></th>
+                    <th>分类名称</th>
                     <th>显示</th>
-                    <th>排序</th>
-                    <th>添加时间</th>
+                    <th width="150">排序</th>
                     <th>操作</th>
                 </tr>
                 </thead>
-                <volist name="result" id="rel">
-                <tr d-id="{$rel.id}">
-                    <td><input type="checkbox" name="" value="{$rel.id}"</td>
-                    <td>{$rel.title}</td>
-                    <td>{$rel.cate_name}</td>
-                    <td><span class="d-cursor" data-val="{$rel.is_active}" ><i class="glyphicon <if condition="$rel['is_active'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
-                    <td><span class="is_sort d-cursor">{$rel.order_sort}</span></td>
-                    <td>{$rel.create_time|date="Y-m-d H:i:s",###}</td>
-                    <td>
-                    <a href="{:U('article/edit',array('id'=>$rel['id']))}" href="#">编辑</a> |
-                    <a href="#">查看</a> |
-                    <a data-toggle="modal" data-target="#delModal" data-uri="{:U('index/del',array('id'=>$rel['id']))}" href="#">删除</a></td>
-                </tr>
-                </volist>
+                <tbody>
+                    {$html_tree}
+                </tbody>
                 </table>
-                <div class="text-center">{$page}</div>
             </div>
         </div>
     </div>
@@ -49,7 +38,7 @@ $(function(){
         var dId = $(this).parent().parent('tr').attr('d-id');
         var that = $(this);
         var s_val = $(this).attr('data-val') == 1  ? 0 : 1;
-        $.getJSON('index.php?c=index&a=ajax_edit',{'id':dId,'field':'visibility','val':s_val},function(data){
+        $.getJSON('index.php?c=articlecategory&a=ajax_edit',{'id':dId,'field':'visibility','val':s_val},function(data){
                 if(data.status==true){
                     if(data.rel.visibility==1)
                         that.children('i').attr('class','glyphicon glyphicon-ok');
@@ -66,7 +55,7 @@ $(function(){
         $('<input type="text" class="lt_input_text" value="'+s_val+'" />').width(35).focusout(function(){
             $(this).prev('span').show().text($(this).val());
             if($(this).val() != s_val) {
-                $.getJSON('index.php?c=index&a=ajax_edit',{'id':dId,'field':'sort','val':$(this).val()},function(data){
+                $.getJSON('index.php?c=articlecategory&a=ajax_edit',{'id':dId,'field':'sort','val':$(this).val()},function(data){
                     if(data.status!=true)
                         alert('操作失败！');
                 });
@@ -76,6 +65,7 @@ $(function(){
         $(this).hide();
         return false;
     });
+
     $('.table').on('click','[data-target=#delModal]',function(){
         $('#delModal .modal-dialog').css('width','220');
         var that=$(this);
@@ -90,6 +80,35 @@ $(function(){
                     alert('删除失败！');
             });
         });
+    });
+    $('.checkedall').on('click',function(){
+        $('input[name=checkedid]:checkbox').prop("checked",this.checked);
+    });
+    $('.delall').on('click',function(){
+        var arr=new Array();
+        $('input[name=checkedid]:checkbox:checked').each(function(){
+            arr.push($(this).val());
+        })
+        if(arr.length<=0){
+            alert('你没有选中删除项');
+            return false;
+        }
+        if(!confirm('你确定删除吗？'))
+            return false;
+        $.get('index.php?c=articlecategory&a=del',{'id':arr.join(',')},function(data){
+            if(data===true){
+                $('input[name=checkedid]:checkbox:checked').each(function(){
+                    $(this).parent().parent('tr').fadeOut('slow',function(){
+                        $(this).remove();
+                    });
+                })
+            }else
+                alert('删除失败！');
+        });
+    });
+    $('input[name=checkedid]:checkbox').on('click',function(){
+        var tmp=$('input[name=checkedid]:checkbox');
+        $('.checkedall').prop('checked',tmp.length==tmp.filter(':checked').length);
     });
 });
 </script>
