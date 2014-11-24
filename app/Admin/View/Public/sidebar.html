@@ -1,15 +1,14 @@
 <div class="col-sidebar">
-    <ul class="nav nav-sidebar">
-        <li <if condition="$curr eq 'index'">class="active"</if>><a href="{:U('article/index')}">文章管理</a></li>
-        <li <if condition="$curr eq 'index_add'">class="active"</if>><a href="{:U('article/add')}">添加文章</a></li>
-    </ul>
-    <ul class="nav nav-sidebar">
-        <li <if condition="$curr eq 'artcate'">class="active"</if>><a href="{:U('category/index')}">分类管理</a></li>
-        <li <if condition="$curr eq 'artcate_add'">class="active"</if>><a href="{:U('category/add')}">添加分类</a></li>
-    </ul>
-    <ul class="nav nav-sidebar">
-        <li><a href="{:U('user/index')}">用户管理</a></li>
-        <li><a href="{:U('role/index')}">角色管理</a></li>
-        <li><a href="{:U('node/index')}">权限设置</a></li>
-    </ul>
+    <h5><strong>内容管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5>
+    <div class="list-group">
+        <a class="list-group-item active" href="{:U('article/index')}">内容列表</a>
+        <a class="list-group-item" href="{:U('article/add')}">添加文章</a>
+        <a class="list-group-item" href="{:U('category/index')}">分类管理</a>
+    </div>
+    <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5>
+    <div class="list-group">
+        <a class="list-group-item" href="{:U('user/index')}">用户管理</a>
+        <a class="list-group-item active" href="{:U('role/index')}">角色管理</a>
+        <a class="list-group-item" href="{:U('node/index')}">权限设置</a>
+    </div>
 </div>

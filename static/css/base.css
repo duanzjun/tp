@@ -1,16 +1,10 @@
 body{padding-top:50px;}
-.col-sidebar{width:200px;padding:20px;background-color:#eee;position:fixed;top:50px;bottom:0;
+.col-sidebar{width:200px;padding:20px;background-color:#fff;position:fixed;top:50px;bottom:0;
 left:0;display:block;z-index:1000;overflow-x:hidden;overflow-y:auto;border-right:1px solid #ccc;}
+.col-sidebar h5{border-bottom:1px solid #ddd;padding:10px 15px;cursor:pointer;}
+.col-sidebar h5 span{float:right;}
+.col-sidebar .list-group-item{border:none;border-radius:0px}
 .col-main{background-color:#fff;padding:20px 40px;margin-left:200px;}
-.nav-sidebar {margin-right: -21px; /* 20px padding + 1px border */margin-bottom: 20px;margin-left: -20px;}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {color: #fff;background-color: #428bca;}
-
 .d-nav{margin-bottom:15px;}
 #d-container{width:900px;height:320px;margin-bottom:50px;display:inline-block;}
 .d-f-c{width:230px;display:inline-block;}
