@@ -17,8 +17,8 @@ return array(
     'ADMIN_AUTH_KEY' => 'administrator',
     'SPECIAL_USER' => 'admin',
     'REQUIRE_AUTH_MODULE' => '', // 需要认证模块
-    'NOT_AUTH_MODULE' => 'Login,Public', //无需认证模块
-    'USER_AUTH_GATEWAY' => '/Admin/Login', //认证网关
+    'NOT_AUTH_MODULE' => 'Public', //无需认证模块
+    'USER_AUTH_GATEWAY' => '/admin/public/login', //认证网关
     'RBAC_DB_DSN' => '', // 数据库连接DSN
     'RBAC_ROLE_TABLE' => 'tp_role', //角色表名称
     'RBAC_USER_TABLE' => 'tp_role_user', //用户表名称

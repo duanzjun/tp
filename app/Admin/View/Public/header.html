@@ -17,7 +17,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{:U('index/index')}">内容</a></li>
+            <li class="active"><a href="{:U('index/index')}">首页</a></li>
             <li><a href="#">会员</a></li>
             <li><a href="#">订单</a></li>
             <li><a href="#">设置</a></li>
@@ -25,7 +25,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a class="glyphicon glyphicon-user"><span>{$Think.session.userinfo.username}</span></a></li>
             <li><a class="glyphicon glyphicon-envelope" href="#"></a></li>
-            <li><a class="glyphicon glyphicon-log-out" href="{:U('login/logout')}" title="退出"></a></li>
+            <li><a class="glyphicon glyphicon-log-out" href="{:U('public/logout')}" title="退出"></a></li>
           </ul>
         </div>
     </div>

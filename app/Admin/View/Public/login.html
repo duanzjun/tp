@@ -14,23 +14,41 @@
 <div class="container">
     <div class="bs-login">
         <h1 class="text-center">用户登录</h1>
-        <form role="form" method="post" action="{:U('login/checkLogin')}">
+        <p id="check-tips" class="bg-danger text-danger"></p>
+        <form role="form">
             <div class="form-group">
                 <label class="control-label">用户名</label>
-                <input class="form-control" type="text" name="username" placeholder="用户名" />
+                <input class="form-control" id="username" type="text" name="username" placeholder="用户名" />
             </div>
             <div class="form-group">
                 <label class="control-label">密码</label>
-                <input class="form-control" type="password" name="password" placeholder="密码" />
+                <input class="form-control" id="password" type="password" name="password" placeholder="密码" />
             </div>
             <div class="checkbox">
                 <label><input type="checkbox">记住密码</label>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit">登 录</button>
+                <button class="btn btn-primary btn-block" type="submit" style="width:100%">登 录</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+$(function(){
+    $('form').submit(function(){
+        var that=$(this);
+        $.post("{:U('public/login')}",that.serialize(),function(data){
+            if(data.status)
+                window.location.href = data.url;
+            else{
+                $('#check-tips').text(data.info);
+                setTimeout("$('#check-tips').text('')",3000)
+            }
+
+        });
+        return false;
+    });
+});
+</script>
 </body>
 </html>

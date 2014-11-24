@@ -5,7 +5,7 @@ class IndexController extends AdminController
 {
     public function index()
     {
-        var_dump($_SESSION);
+
         $this->display();
     }
 
