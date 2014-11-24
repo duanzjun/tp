@@ -27,4 +27,10 @@ class AdminController extends Controller
             }
         }
     }
+
+    public function add()
+    {
+        echo 'this is add';
+        $this->display();
+    }
 }

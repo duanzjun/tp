@@ -14,6 +14,8 @@ class IndexController extends AdminController
         echo 'edit';
     }
 
+    public function
+
     public function del()
     {
         echo 'del';
