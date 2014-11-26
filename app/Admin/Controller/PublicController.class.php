@@ -22,7 +22,7 @@ class PublicController extends Controller
                 $this->error('帐号不存在或已禁用！');
             else{
                 if($authInfo['password']!==md5($password))
-                    $this->error('密码错误');
+                    $this->error('帐号或密码错误');
                 session(C('USER_AUTH_KEY'),$authInfo['id']);
                 session('userinfo',$authInfo);
 

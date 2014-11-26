@@ -5,17 +5,17 @@ class CommonController extends Controller
 {
     function _initialize()
     {
-        // $rbac = new \Org\Util\Rbac;
-        import('@.ORG.Util.Rbac');
-        // import('Util.Couter');
+        // // $rbac = new \Org\Util\Rbac;
+        // import('@.ORG.Util.Rbac');
+        // // import('Util.Couter');
 
-        $map['account']='demo';
-        $authInfo=Rbac::authenticate($map);
-        // trace($authInfo);
+        // $map['account']='demo';
+        // $authInfo=Rbac::authenticate($map);
+        // // trace($authInfo);
     }
 
-    function index(){
-        // echo 'hahha';
-
+    function index()
+    {
+        $this->display();
     }
 }

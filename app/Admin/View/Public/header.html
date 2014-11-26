@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <title>Index</title>
 <link rel="stylesheet" href="__STATIC__/css/bootstrap.css">
-<link rel="stylesheet" href="__STATIC__/css/base.css">
+<link rel="stylesheet" href="__STATIC__/css/admin.css">
 <script src="__STATIC__/js/jquery.js"></script>
 <script src="__STATIC__/js/bootstrap.js"></script>
 <script src="__STATIC__/js/common.js"></script>
@@ -20,7 +20,7 @@
             <li class="active"><a href="{:U('index/index')}">首页</a></li>
             <li><a href="#">会员</a></li>
             <li><a href="#">订单</a></li>
-            <li><a href="#">设置</a></li>
+            <li><a href="{:U('index/setting')}">设置</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a class="glyphicon glyphicon-user"><span>{$Think.session.userinfo.username}</span></a></li>

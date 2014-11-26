@@ -9,5 +9,6 @@ left:0;display:block;z-index:1000;overflow-x:hidden;overflow-y:auto;border-right
 #d-container{width:900px;height:320px;margin-bottom:50px;display:inline-block;}
 .d-f-c{width:230px;display:inline-block;}
 .d-form .form-control{width:auto;}
+.d-form .input-wdh350{width:350px;}
 .d-label{width:80px;text-align:right;margin-right:8px;}
 .d-cursor{cursor:pointer;}

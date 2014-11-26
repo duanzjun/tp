@@ -1,21 +1,12 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class IndexController extends Controller
+class IndexController extends CommonController
 {
-    public function index()
+    public function _before_index()
     {
-        $model = M('Article');
-        $result=$model->order('add_time DESC')->page(I('get.p',0,'intval').',10')->select();
-        $count=$model->count();
-        $Page=new \Think\Page($count,10);
-        $Page->setConfig('prev','上一页');
-        $Page->setConfig('next','下一页');
-        $show=$Page->show();
-        $this->assign('page',$show);
-        $this->assign('result',$result);
-        $this->assign('curr','index');
-        $this->display();
+        $articles=M('Article')->where('publish=1')->order('order_sort ASC,id DESC')->select();
+        $this->assign('articles',$articles);
     }
 
     public function add()

@@ -1,0 +1,69 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="row">
+        <include file="Public:sidebar" />
+        <div class="col-main">
+            <div class="row">
+                <form role="form" class="d-form form-horizontal" enctype="multipart/form-data" action="" method="post">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="site_url">网站域名</label>
+                        <div class="col-md-10">
+                            <input class="form-control input-wdh350" id="site_url" type="text" name="site_url" value="{$setting.site_url}" placeholder="网站域名"/>
+                            <p class="help-block">网站地址必须以http:// 开头 / 斜杠结尾</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="site_name">网站名称</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="site_name" type="text" name="site_name" value="{$setting.site_name}" placeholder="网站名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="logo">网站LOGO</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="file" name="logo_file" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="title">ICP备案号</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="title" type="text" name="icp" value="{$setting.icp}" placeholder="ICP备案号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="site_close">网站关闭</label>
+                        <div class="col-md-10">
+                            <label class="radio-inline"><input type="radio" name="site_close" value="1" checked="checked" />开启</label>
+                            <label class="radio-inline"><input type="radio" name="site_close" value="0" />关闭</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="close_reason">关闭原因</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control input-wdh350" id="close_reason" name="close_reason" placeholder="关闭原因">{$setting.close_reason}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="gzip">Gzip压缩</label>
+                        <div class="col-md-10">
+                            <label class="radio-inline"><input type="radio" name="gzip" value="1" checked="checked" />开启</label>
+                            <label class="radio-inline"><input type="radio" name="gzip" value="0" />关闭</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">统计代码</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control input-wdh350" name="statistics" value="{$setting.statistics}" placeholder="统计代码"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />
