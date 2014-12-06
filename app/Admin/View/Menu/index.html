@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="row">
+        <include file="Public:sidebar" />
+        <div class="col-main">
+            <div class="row mg-btm10">
+                <div class="pull-right">
+                    <a class="btn btn-primary glyphicon glyphicon-plus" href="{:U('menu/add')}" title="添加菜单"></a>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>排序</th>
+                            <th class="text-center">ID</th>
+                            <th>菜单名称</th>
+                            <th>路径</th>
+                            <th class="text-right">激活</th>
+                            <th class="text-right">显示菜单</th>
+                            <th class="text-right">管理操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {$html_tree}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />

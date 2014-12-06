@@ -1,14 +1,8 @@
 <div class="col-sidebar">
-    <h5><strong>内容管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5>
+    <!-- <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5> -->
     <div class="list-group">
-        <a class="list-group-item" href="{:U('article/index')}">内容列表</a>
-        <a class="list-group-item" href="{:U('article/add')}">添加文章</a>
-        <a class="list-group-item" href="{:U('category/index')}">分类管理</a>
-    </div>
-    <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5>
-    <div class="list-group">
-        <a class="list-group-item" href="{:U('user/index')}">用户管理</a>
-        <a class="list-group-item" href="{:U('role/index')}">角色管理</a>
-        <a class="list-group-item" href="{:U('node/index')}">权限设置</a>
+        <volist name="submenu" id="smu">
+        <a class="list-group-item <eq name="smu.id" value="$curmenu.id">active</eq>" href="{$smu.path}">{$smu.name}</a>
+        </volist>
     </div>
 </div>
