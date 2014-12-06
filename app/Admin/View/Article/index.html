@@ -3,6 +3,7 @@
     <div class="row">
         <include file="Public:sidebar" />
         <div class="col-main">
+
             <div class="row d-nav">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#">文章管理</a></li>
@@ -10,6 +11,10 @@
                 </ul>
             </div>
             <div class="row">
+                <div class="btn-group">
+                <button class="btn btn-primary" url="{:U('article/add')}">删除</button>
+                <button class="btn">添加</button>
+                </div>
                 <table class="table table-bordered table-hover table-striped">
                 <thead>
                 <tr>

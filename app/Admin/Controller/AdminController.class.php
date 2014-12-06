@@ -29,6 +29,18 @@ class AdminController extends Controller
     }
 
     /**
+     * 后台菜单列表
+    */
+    public function get_menu()
+    {
+        $menu=array(
+            ''
+        );
+
+        return $menu;
+    }
+
+    /**
      * 文件上传
     */
     public function upload()
