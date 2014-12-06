@@ -26,6 +26,61 @@ class AdminController extends Controller
                 }
             }
         }
+
+        $menuList=M('Menu')->where('status=1 AND display=1')->order('sort ASC')->select();
+        $m=array();
+        foreach($menuList as $k=>$v){
+            // $v['pid']=0
+            $m[$v['pid']]['child'][]=$v;
+        }
+        var_dump($m);
+
+        $this->topMenu();
+        $this->subMenu();
+    }
+
+    /**
+     *后台顶部菜单
+    */
+    public function topMenu()
+    {
+        $topmenu=M('Menu')->where('pid=0')->order('sort ASC')->select();
+        $topmenu=$this->menuPath($topmenu);
+        $this->assign('topmenu',$topmenu);
+    }
+
+    /**
+     * 侧边菜单列表
+    */
+    public function subMenu()
+    {
+        $map['controller']=strtolower(CONTROLLER_NAME);
+        $map['action']=ACTION_NAME;
+        $menu_mod=D('Menu');
+        $curmenu=$menu_mod->where($map)->find();
+        if(empty($curmenu)) return ;
+        $pid=$curmenu['pid']>0 ? $curmenu['pid'] : $curmenu['id'];
+        $submenu=$menu_mod->subAll($pid,1,1);
+        $submenu=$this->menuPath($submenu);
+
+        $this->assign('curmenu',$curmenu);
+        $this->assign('submenu',$submenu);
+    }
+
+    /**
+     * 后台菜单路径组合
+    */
+    public function menuPath($menu)
+    {
+        foreach($menu as $k=>$v){
+            $path=array();
+            $v['module'] && $path[]='m='.$v['module'];
+            $v['controller'] && $path[]='c='.$v['controller'];
+            $v['action'] && $path[]='a='.$v['action'];
+            $v['param'] && $path[]=$v['param'];
+            !empty($path) && $menu[$k]['path']='index.php?'.implode('&',$path);
+        }
+        return $menu;
     }
 
     /**
@@ -36,7 +91,7 @@ class AdminController extends Controller
         $upload=new \Think\Upload();//实例化上传类
         $upload->maxSize=3145728; //设置附件上传大小
         $upload->exts=array('jpg','gif','png','jpeg');//设置附件上传类型
-        $upload->rootPath=__STATIC__.'/uploads/';//设置附件上传根目录
+        $upload->rootPath='d/uploads/';//设置附件上传根目录
         $upload->savePath='';//设置附件上传（子）目录
 
         //上传文件
@@ -48,9 +103,23 @@ class AdminController extends Controller
         }
     }
 
-    public function add()
+    /**
+     * ajax修改单个字段值
+     */
+    public function ajax_edit()
     {
-        echo 'this is add';
-        $this->display();
+        $id = I("get.id",0,'intval');
+        $field = I('get.field','','trim');
+        $val = I('get.val','','trim');
+        if(!in_array($field,array('status','publish','display','visibility','sort')) || empty($id)){
+            $this->ajaxReturn(array('status'=>false),'JSON');
+        }
+
+        $mod = D(CONTROLLER_NAME);
+        $pk = $mod->getPk();
+
+        //允许异步修改的字段列表  放模型里面去
+        $mod->where(array($pk=>$id))->setField($field, $val);
+        $this->ajaxReturn(array('status'=>true,'rel'=>array('state'=>$val)),'JSON');
     }
 }

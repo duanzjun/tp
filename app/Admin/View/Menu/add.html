@@ -1,0 +1,106 @@
+<include file="Public:header" />
+<div class="constainer_fluid">
+    <div class="row">
+        <include file="Public:sidebar" />
+        <div class="col-main">
+            <div class="row">
+                <form role="form" class="d-form form-horizontal" action="" method="post">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="pid">上级菜单</label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="pid">
+                                <option value="0">作为一级菜单</option>
+                                {$menu_tree}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="name">菜单名称</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="name" type="text" name="name" value="{$menu.name}" placeholder="菜单名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="title">模块名</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="module" type="text" name="module" value="{$menu.module|default='admin'}" placeholder="模块名" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="controller">控制器</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="controller" type="text" name="controller" value="{$menu.controller}" placeholder="控制器" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="action">方法名</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="action" type="text" name="action" value="{$menu.action}" placeholder="方法名" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="param">参数</label>
+                        <div class="col-md-10">
+                            <input class="form-control" id="param" type="text" name="param" value="{$menu.param}" placeholder="参数"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="status">激活</label>
+                        <div class="col-md-10">
+                            <label class="radio-inline"><input type="radio" name="status" value="1" <eq name="menu.status" value="1"> checked="checked"</eq> />开启</label>
+                            <label class="radio-inline"><input type="radio" name="status" value="0" <eq name="menu.status" value="0"> checked="checked"</eq> />关闭</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="display">是否显示菜单</label>
+                        <div class="col-md-10">
+                            <label class="radio-inline"><input type="radio" name="display" value="1" <eq name="menu.display" value="1"> checked="checked"</eq>/>开启</label>
+                            <label class="radio-inline"><input type="radio" name="display" value="0" <eq name="menu.display" value="0"> checked="checked"</eq>/>关闭</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="sort">排序</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" name="sort" value="{$menu.sort|default=255}" placeholder="排序" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="remark">备注</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" id="remark" name="remark" placeholder="信息备注"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary">添加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/jquery.validate.js"></script>
+<script>
+$(function(){
+    $('.form-horizontal').validate({
+        errorElement:'span',
+        errorClass:'help-block',
+        focusInvalid:false,
+        highlight:function(element){
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        success:function(label){
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        errorPlacement:function(error,element){
+            element.parent('div').append(error);
+        },
+        rules:{name:'required'},
+        messages:{name:{required:'菜单名称不能为空'}}
+    });
+});
+</script>
+<include file="Public:footer" />

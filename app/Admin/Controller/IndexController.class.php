@@ -66,7 +66,7 @@ class IndexController extends AdminController
         if(IS_POST){
             $data=array('k'=>'base_setting','v'=>json_encode($_POST));
             $file=$this->upload();
-dump($file);
+
             if(!empty($list)){
                 $setting_mod->where('k="base_setting"')->save($data);
             }else{

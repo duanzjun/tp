@@ -9,6 +9,7 @@ class CategoryModel extends Model
         array('cate_name','require','分类名称不能为空',self::EXISTS_VALIDATE),
         array('order_sort','number','排序只能为数值'),
     );
+
     /**
      * 获取所有分类数据
      * @param int $is_active 1显示分类

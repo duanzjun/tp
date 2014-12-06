@@ -77,19 +77,19 @@ class ArticleController extends AdminController
             $this->ajaxReturn(false);
     }
 
-    public function ajax_edit()
-    {
-        $id=I('get.id',0,'intval');
-        $field=I('get.field','','trim');
-        if(!in_array($field,array('visibility','sort')) || empty($id)){
-            $this->ajaxReturn(array('status'=>false),'JSON');
-        }
-        $model=D('Article');
-        $data[$field]=I('get.val',0,'intval');
+    // public function ajax_edit()
+    // {
+    //     $id=I('get.id',0,'intval');
+    //     $field=I('get.field','','trim');
+    //     if(!in_array($field,array('visibility','sort')) || empty($id)){
+    //         $this->ajaxReturn(array('status'=>false),'JSON');
+    //     }
+    //     $model=D('Article');
+    //     $data[$field]=I('get.val',0,'intval');
 
-        $model->where('id='.$id)->save($data);
-        $this->ajaxReturn(array('status'=>true,'rel'=>$data),'JSON');
-    }
+    //     $model->where('id='.$id)->save($data);
+    //     $this->ajaxReturn(array('status'=>true,'rel'=>$data),'JSON');
+    // }
 
     public function images()
     {

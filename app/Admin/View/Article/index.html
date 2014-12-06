@@ -10,27 +10,27 @@
                 </ul>
             </div>
             <div class="row">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" />全选</th>
+                    <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked', this.checked);"/></th>
+                    <th>排序</th>
                     <th>标题</th>
                     <th>分类</th>
-                    <th>显示</th>
-                    <th>排序</th>
+                    <th class="text-center">显示</th>
                     <th>添加时间</th>
-                    <th>操作</th>
+                    <th class="text-right">操作</th>
                 </tr>
                 </thead>
                 <volist name="result" id="rel">
                 <tr d-id="{$rel.id}">
-                    <td><input type="checkbox" name="" value="{$rel.id}"</td>
+                    <td class="text-center"><input type="checkbox" name="checked[]" value="{$rel.id}"</td>
+                    <td><input class="wd50" type="text" value="{$rel.order_sort}" /></td>
                     <td>{$rel.title}</td>
                     <td>{$rel.cate_name}</td>
-                    <td><span class="d-cursor" data-val="{$rel.is_active}" ><i class="glyphicon <if condition="$rel['is_active'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
-                    <td><span class="is_sort d-cursor">{$rel.order_sort}</span></td>
+                    <td class="text-center"><span class="d-cursor" d-val="{$rel['publish']?0:1}" d-uri="{:U('article/ajax_edit',array('id'=>$rel['id'],'field'=>'publish'))}" onclick="demo_toggle(this)"><i class="glyphicon <if condition="$rel['publish'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
                     <td>{$rel.create_time|date="Y-m-d H:i:s",###}</td>
-                    <td>
+                    <td class="text-right">
                     <a href="{:U('article/edit',array('id'=>$rel['id']))}" href="#">编辑</a> |
                     <a href="#">查看</a> |
                     <a data-toggle="modal" data-target="#delModal" data-uri="{:U('index/del',array('id'=>$rel['id']))}" href="#">删除</a></td>
@@ -44,7 +44,7 @@
 </div>
 
 <script>
-$(function(){
+/*$(function(){
     $('.is_visibility').on('click',function(){
         var dId = $(this).parent().parent('tr').attr('d-id');
         var that = $(this);
@@ -91,7 +91,7 @@ $(function(){
             });
         });
     });
-});
+});*/
 </script>
 <!-- delModal -->
 <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
