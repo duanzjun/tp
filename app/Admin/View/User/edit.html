@@ -1,61 +1,52 @@
 <include file="Public:header"/>
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row d-nav">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li><a href="{:U('User/index')}">用户管理</a></li>
-                    <li class="active"><a href="#">编辑用户</a></li>
-                </ul>
-            </div>
-            <div class="row">
-                <form role="form" class="d-form form-horizontal" action="" method="post">
-                    <input type="hidden" name="id" value="{$list.id}"/>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="username">用户名</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="username" name="username" value="{$list.username}" placeholder="用户名" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="password">密码</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="password" name="password" placeholder="密码" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="role">用户组</label>
-                        <div class="col-md-10">
-                            <select class="form-control" name="role">
-                                <option value="">请选择</option>
-                                <volist name="role" id="r">
-                                <option value="{$r.id}" <if condition="$r['id'] eq $list['role']"> selected</if>>{$r.name}</option>
-                                </volist>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="status">状态</label>
-                        <div class="col-md-10">
-                            <label class="radio-inline"><input type="radio" name="status" value="1" <if condition="1 eq $list['status']"> checked="checked"</if> />开启</label>
-                            <label class="radio-inline"><input type="radio" name="status" value="0" <if condition="0 eq $list['status']"> checked="checked"</if> />关闭</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="remark">备注</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" id="remark" name="remark" placeholder="信息备注">{$list.remark}</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary">添加</button>
-                        </div>
-                    </div>
-                </form>
+    <ul class="nav nav-tabs" role="tablist">
+        <li><a href="{:U('User/index')}">用户管理</a></li>
+        <li class="active"><a href="#">编辑用户</a></li>
+    </ul>
+    <form role="form" class="d-form form-horizontal" action="" method="post">
+        <input type="hidden" name="id" value="{$list.id}"/>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="username">用户名</label>
+            <div class="col-md-10">
+                <input class="form-control" id="username" name="username" value="{$list.username}" placeholder="用户名" />
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="password">密码</label>
+            <div class="col-md-10">
+                <input class="form-control" id="password" name="password" placeholder="密码" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="role">用户组</label>
+            <div class="col-md-10">
+                <select class="form-control" name="role">
+                    <option value="">请选择</option>
+                    <volist name="role" id="r">
+                    <option value="{$r.id}" <if condition="$r['id'] eq $list['role']"> selected</if>>{$r.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="status">状态</label>
+            <div class="col-md-10">
+                <label class="radio-inline"><input type="radio" name="status" value="1" <if condition="1 eq $list['status']"> checked="checked"</if> />开启</label>
+                <label class="radio-inline"><input type="radio" name="status" value="0" <if condition="0 eq $list['status']"> checked="checked"</if> />关闭</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="remark">备注</label>
+            <div class="col-md-10">
+                <textarea class="form-control" id="remark" name="remark" placeholder="信息备注">{$list.remark}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </form>
 </div>
 <include file="Public:footer"/>

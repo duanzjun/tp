@@ -24,12 +24,33 @@ class MenuModel extends Model
      * @param intval status 是否显示分类
      * @param intval display 是否显示后台菜单
     */
-    public function subAll($pid,$status=1,$display=0)
+    public function subAll($pid=0,$status=1,$display=0)
     {
-        $map['pid']=$pid;
-        $map['status']=$status;
-        $map['display']=$display;
+        $map=array(
+            'pid'=>$pid,
+            'status'=>$status,
+            'display'=>$display
+        );
         $submenu=$this->where($map)->select();
         return $submenu;
+    }
+
+    /**
+     * 获取根节点数据
+    */
+    public function parentAll($pid=0)
+    {
+        $parent=$this->get_on($pid);
+        if(!empty($parent['pid'])){
+            $this->get_on($parent['pid']);
+        }
+        fb($parent);
+        return $parent;
+    }
+
+    public function get_on($pid)
+    {
+        $parent=$this->where('status=1 AND display=1 AND id='.$pid)->order('id ASC')->find();
+        return $parent;
     }
 }

@@ -1,47 +1,37 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-
-            <div class="row d-nav">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#">文章管理</a></li>
-                    <li><a href="{:U('article/add')}">添加文章</a></li>
-                </ul>
-            </div>
-            <div class="row">
-                <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked', this.checked);"/></th>
-                    <th>排序</th>
-                    <th>标题</th>
-                    <th>分类</th>
-                    <th class="text-center">显示</th>
-                    <th>添加时间</th>
-                    <th class="text-right">操作</th>
-                </tr>
-                </thead>
-                <volist name="result" id="rel">
-                <tr d-id="{$rel.id}">
-                    <td class="text-center"><input type="checkbox" name="checked[]" value="{$rel.id}"</td>
-                    <td><input class="wd50" type="text" value="{$rel.order_sort}" /></td>
-                    <td>{$rel.title}</td>
-                    <td>{$rel.cate_name}</td>
-                    <td class="text-center"><span class="d-cursor" d-val="{$rel['publish']?0:1}" d-uri="{:U('article/ajax_edit',array('id'=>$rel['id'],'field'=>'publish'))}" onclick="demo_toggle(this)"><i class="glyphicon <if condition="$rel['publish'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
-                    <td>{$rel.create_time|date="Y-m-d H:i:s",###}</td>
-                    <td class="text-right">
-                    <a href="{:U('article/edit',array('id'=>$rel['id']))}" href="#">编辑</a> |
-                    <a href="#">查看</a> |
-                    <a data-toggle="modal" data-target="#delModal" data-uri="{:U('index/del',array('id'=>$rel['id']))}" href="#">删除</a></td>
-                </tr>
-                </volist>
-                </table>
-                <div class="text-center">{$page}</div>
-            </div>
-        </div>
-    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#">文章管理</a></li>
+        <li><a href="{:U('article/add')}">添加文章</a></li>
+    </ul>
+    <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked', this.checked);"/></th>
+        <th>排序</th>
+        <th>标题</th>
+        <th>分类</th>
+        <th class="text-center">显示</th>
+        <th>添加时间</th>
+        <th class="text-right">操作</th>
+    </tr>
+    </thead>
+    <volist name="result" id="rel">
+    <tr d-id="{$rel.id}">
+        <td class="text-center"><input type="checkbox" name="checked[]" value="{$rel.id}"</td>
+        <td><input class="wd50" type="text" value="{$rel.order_sort}" /></td>
+        <td>{$rel.title}</td>
+        <td>{$rel.cate_name}</td>
+        <td class="text-center"><span class="d-cursor" d-val="{$rel['publish']?0:1}" d-uri="{:U('article/ajax_edit',array('id'=>$rel['id'],'field'=>'publish'))}" onclick="demo_toggle(this)"><i class="glyphicon <if condition="$rel['publish'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
+        <td>{$rel.create_time|date="Y-m-d H:i:s",###}</td>
+        <td class="text-right">
+        <a href="{:U('article/edit',array('id'=>$rel['id']))}" href="#">编辑</a> |
+        <a href="#">查看</a> |
+        <a data-toggle="modal" data-target="#delModal" data-uri="{:U('index/del',array('id'=>$rel['id']))}" href="#">删除</a></td>
+    </tr>
+    </volist>
+    </table>
+    <div class="text-center">{$page}</div>
 </div>
 
 <script>

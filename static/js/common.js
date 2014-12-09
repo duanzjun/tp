@@ -1,15 +1,5 @@
 $(function(){
-    //侧边菜单收缩
-    $('.col-sidebar h5').on('click',function(){
-        var that=$(this);
-        var spn=that.children('span');
-        $(this).next('.list-group').slideToggle(function(){
-            if(that.next('.list-group').is(':hidden'))
-                spn.attr('class','glyphicon glyphicon-chevron-right');
-            else
-                spn.attr('class','glyphicon glyphicon-chevron-down');
-        });
-    })
+
 
     $('.confirmurl').on('click',function(){
         var that=$(this);
@@ -25,6 +15,8 @@ $(function(){
             })
         }
     });
+
+
 });
 function demo_toggle(obj)
 {

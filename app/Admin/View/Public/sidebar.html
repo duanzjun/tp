@@ -1,8 +1,6 @@
-<div class="col-sidebar">
-    <!-- <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5> -->
-    <div class="list-group">
-        <volist name="submenu" id="smu">
-        <a class="list-group-item <eq name="smu.id" value="$curmenu.id">active</eq>" href="{$smu.path}">{$smu.name}</a>
-        </volist>
-    </div>
+<!-- <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5> -->
+<div class="list-group">
+    <volist name="submenu" id="smu">
+    <a id="mp{$smu.id}" class="list-group-item" href="javascript:_MP({$smu.id},'{$smu.path}');">{$smu.name}</a>
+    </volist>
 </div>

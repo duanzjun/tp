@@ -1,49 +1,38 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row d-nav">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#">用户管理</a></li>
-                    <li><a href="{:U('User/add')}">添加用户</a></li>
-                </ul>
-            </div>
-            <div class="row">
-                <table class="table table-bordered table-hover table-striped">
-                <thead>
-                <tr>
-                    <th><input type="checkbox" />全选</th>
-                    <th>用户名称</th>
-                    <th>角色名称</th>
-                    <th>用户描述</th>
-                    <th>最后登录IP</th>
-                    <th>最后登录时间</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <volist name="lists" id="list">
-                <tr d-id="{$list.id}">
-                    <td><input type="checkbox" name="" value="{$list.id}"</td>
-                    <td>{$list.username}</td>
-                    <td>{$role[$list['role']]}</td>
-                    <td>{$list.remark}</td>
-                    <td>{$list.last_login_ip}</td>
-                    <td>{$list.last_login_time|date="Y-m-d H:i",###}</td>
-                    <td align="center"><span class="d-cursor" d-val="{$list['status']?0:1}" d-uri="{:U('user/ajax_edit',array('id'=>$list['id'],'field'=>'status'))}" onclick="demo_toggle(this)" ><i class="glyphicon <if condition="$list['status'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
-                    <td>
-                    <a href="{:U('User/edit',array('id'=>$list['id']))}" href="#">编辑</a> |
-                    <a data-toggle="modal" data-target="#delModal" data-uri="{:U('User/del',array('id'=>$list['id']))}" href="#">删除</a></td>
-                </tr>
-                </volist>
-                </table>
-                <div class="text-center">{$page}</div>
-            </div>
-        </div>
+    <div class="mg-btm10">
+        <a class="btn btn-default" href="{:U('User/add')}" title="添加用户">添加用户</a>
     </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked', this.checked);" /></th>
+            <th>用户名称</th>
+            <th>角色名称</th>
+            <th>用户描述</th>
+            <th>最后登录IP</th>
+            <th>最后登录时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <volist name="lists" id="list">
+        <tr>
+            <td class="text-center"><input type="checkbox" name="checked[]" value="{$list.id}"</td>
+            <td>{$list.username}</td>
+            <td>{$role[$list['role']]}</td>
+            <td>{$list.remark}</td>
+            <td>{$list.last_login_ip}</td>
+            <td>{$list.last_login_time|date="Y-m-d H:i",###}</td>
+            <td align="center"><span class="d-cursor" d-val="{$list['status']?0:1}" d-uri="{:U('user/ajax_edit',array('id'=>$list['id'],'field'=>'status'))}" onclick="demo_toggle(this)" ><i class="glyphicon <if condition="$list['status'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>
+            <td>
+            <a href="{:U('User/edit',array('id'=>$list['id']))}" href="#">编辑</a> |
+            <a data-toggle="modal" data-target="#delModal" data-uri="{:U('User/del',array('id'=>$list['id']))}" href="#">删除</a></td>
+        </tr>
+        </volist>
+    </table>
+    <div class="text-center">{$page}</div>
 </div>
-
 <script>
 $(function(){
     // $('.is_status').on('click',function(){

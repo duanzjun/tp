@@ -3,6 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class AdminController extends Controller
 {
+    var $_menu=array();
     public function _initialize()
     {
         //后台用户权限检查
@@ -26,23 +27,12 @@ class AdminController extends Controller
                 }
             }
         }
-
-        $menuList=M('Menu')->where('status=1 AND display=1')->order('sort ASC')->select();
-        $m=array();
-        foreach($menuList as $k=>$v){
-            // $v['pid']=0
-            $m[$v['pid']]['child'][]=$v;
-        }
-        var_dump($m);
-
-        $this->topMenu();
-        $this->subMenu();
     }
 
     /**
      *后台顶部菜单
     */
-    public function topMenu()
+    public function topMenu($menuid)
     {
         $topmenu=M('Menu')->where('pid=0')->order('sort ASC')->select();
         $topmenu=$this->menuPath($topmenu);
@@ -54,17 +44,21 @@ class AdminController extends Controller
     */
     public function subMenu()
     {
-        $map['controller']=strtolower(CONTROLLER_NAME);
-        $map['action']=ACTION_NAME;
-        $menu_mod=D('Menu');
-        $curmenu=$menu_mod->where($map)->find();
-        if(empty($curmenu)) return ;
-        $pid=$curmenu['pid']>0 ? $curmenu['pid'] : $curmenu['id'];
-        $submenu=$menu_mod->subAll($pid,1,1);
-        $submenu=$this->menuPath($submenu);
+        $menuid=I('menuid',0,'intval');
+        // $this->assign('submenu',$this->_menu($menuid));
 
-        $this->assign('curmenu',$curmenu);
-        $this->assign('submenu',$submenu);
+
+        // $map['controller']=strtolower(CONTROLLER_NAME);
+        // $map['action']=ACTION_NAME;
+        // $menu_mod=D('Menu');
+        // $curmenu=$menu_mod->where($map)->find();
+        // if(empty($curmenu)) return ;
+        // $pid=$curmenu['pid']>0 ? $curmenu['pid'] : $curmenu['id'];
+        // $submenu=$menu_mod->subAll($pid,1,1);
+        // $submenu=$this->menuPath($submenu);
+
+        // $this->assign('curmenu',$curmenu);
+        // $this->assign('submenu',$submenu);
     }
 
     /**

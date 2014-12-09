@@ -1,30 +1,22 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>全选</th>
-                            <th>排序</th>
-                            <th>ID</th>
-                            <th>菜单名称</th>
-                            <th>类型</th>
-                            <th>状态</th>
-                            <th>显示</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {$html_tree}
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>全选</th>
+                <th>排序</th>
+                <th>ID</th>
+                <th>菜单名称</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>显示</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {$html_tree}
+        </tbody>
+    </table>
 </div>
 <!-- addModal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

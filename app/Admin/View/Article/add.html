@@ -1,59 +1,50 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row d-nav">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li><a href="{:U('category/index')}">分类管理</a></li>
-                    <li class="active"><a href="#">添加分类</a></li>
-                </ul>
-            </div>
-            <div class="row">
-                <form role="form" class="d-form form-horizontal" action="" method="post">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="title">标题</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" name="title" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="cate_id">所属分类</label>
-                        <div class="col-md-10">
-                            <select class="form-control" name="cate_id">
-                                <option value="0">父级分类</option>
-                                {$html_tree}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-10 col-md-offset-2">
-                        <script id="d-container" name="content" type="text/plain">
-                        </script>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="order_sort">排序</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" name="order_sort" value="255" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="publish">发布</label>
-                        <div class="col-md-10">
-                            <label class="radio-inline"><input type="radio" name="publish" value="1" checked="checked" />是</label>
-                            <label class="radio-inline"><input type="radio" name="publish" value="0" />否</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-10 col-md-offset-2">
-                        <button type="submit" class="btn btn-primary">提交</button>
-                        </div>
-                    </div>
-                </form>
+    <ul class="nav nav-tabs" role="tablist">
+        <li><a href="{:U('category/index')}">分类管理</a></li>
+        <li class="active"><a href="#">添加分类</a></li>
+    </ul>
+    <form role="form" class="d-form form-horizontal" action="" method="post">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="title">标题</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="title" />
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="cate_id">所属分类</label>
+            <div class="col-md-10">
+                <select class="form-control" name="cate_id">
+                    <option value="0">父级分类</option>
+                    {$html_tree}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+            <script id="d-container" name="content" type="text/plain">
+            </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="order_sort">排序</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="order_sort" value="255" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="publish">发布</label>
+            <div class="col-md-10">
+                <label class="radio-inline"><input type="radio" name="publish" value="1" checked="checked" />是</label>
+                <label class="radio-inline"><input type="radio" name="publish" value="0" />否</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+            <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </form>
 </div>
 <script src="__STATIC__/js/ueditor/ueditor.config.js"></script>
 <script src="__STATIC__/js/ueditor/ueditor.all.js"></script>

@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">我的个人信息</div>
+          <div class="panel-body">
+            <p>您好，{$user.username}</p>
+            <p>所属角色：{$user.role_name}</p>
+            <hr/>
+            <p>上次登录时间：{$user.last_login_time|date="Y-m-d H:i",###}</p>
+            <p>上次登录IP：{$user.last_login_ip}</p>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">系统信息</h3>
+          </div>
+          <div class="panel-body">
+              <p>操作系统：{$sys_info.os}</p>
+              <p>主机地址：{$sys_info.pc}:{$sys_info.port}</p>
+              <p>服务器软件：{$sys_info.server_software}</p>
+              <p>上传文件：{$sys_info.upload_max_filesize}</p>
+              <p>当前时间：{$sys_info.time}</p>
+              <p>语言：{$sys_info.language}</p>
+              <p>MySQL版本：{$sys_info.mysql_version}</p>
+              <p>MYSQL大小：{$sys_info.mysql_size}</p>
+              <p>MYSQL脚本最大执行时间：{$sys_info.max_ex_time}</p>
+          </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />

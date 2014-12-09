@@ -5,6 +5,15 @@ class IndexController extends AdminController
 {
     public function index()
     {
+        $menu_mod=D('Menu');
+        //顶部菜单列表
+        $topmenu=$menu_mod->where('status=1 AND display=1 AND pid=0')->order('sort ASC')->select();
+        $this->assign('topmenu',$topmenu);
+        $this->display();
+    }
+
+    public function panel()
+    {
         $sys_info=array(
             'os'=>PHP_OS,
             'server_software'=>strpos($_SERVER['SERVER_SOFTWARE'], 'PHP')===false ? $_SERVER['SERVER_SOFTWARE'].' PHP/'.phpversion() : $_SERVER['SERVER_SOFTWARE'],
@@ -24,6 +33,27 @@ class IndexController extends AdminController
         $this->assign('sys_info',$sys_info);
         $this->assign('user',$userinfo);
         $this->display();
+    }
+
+    /**
+     * 左侧菜单列表
+    */
+    public function left_menu()
+    {
+        $menuid=I('menuid',0,'intval');
+        $pid=I('pid',0,'intval');
+        $map=array(
+            'display'=>1,
+            'status'=>1
+        );
+        $map['pid']=!empty($menuid) ?  $map['pid']=$menuid : 1;
+        $submenu=D('Menu')->where($map)->order('sort ASC')->select();
+
+        foreach($submenu as $k=>$v){
+            $submenu[$k]['path']=U($v['module'].'/'.$v['controller'].'/'.$v['action']);
+        }
+        $this->assign('submenu',$submenu);
+        $this->display('Public/sidebar');
     }
 
     /**

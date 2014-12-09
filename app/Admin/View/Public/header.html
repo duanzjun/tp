@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -8,24 +8,8 @@
 <script src="__STATIC__/js/jquery.js"></script>
 <script src="__STATIC__/js/bootstrap.js"></script>
 <script src="__STATIC__/js/common.js"></script>
+<style>
+body{padding-top:15px;}
+</style>
 </head>
 <body>
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Dan Admin v1.0 <small>Bate</small></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <volist name="topmenu" id="tmu">
-            <li <eq name="tmu.id" value="$curmenu.id">class="active"</eq>><a href="{$tmu.path}">{$tmu.name}</a></li>
-            </volist>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a class="glyphicon glyphicon-user"><span>{$Think.session.userinfo.username}</span></a></li>
-            <li><a class="glyphicon glyphicon-envelope" href="#"></a></li>
-            <li><a class="glyphicon glyphicon-log-out" href="{:U('public/logout')}" title="退出"></a></li>
-          </ul>
-        </div>
-    </div>
-</div>

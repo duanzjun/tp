@@ -1,37 +1,24 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row d-nav">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#">分类管理</a></li>
-                    <li><a href="{:U('category/add')}">添加分类</a></li>
-                </ul>
-            </div>
-            <div class="row">
-                <a href="#" class="delall">批量删除</a>
-            </div>
-            <div class="row">
-                <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th><input id="checkedall" class="checkedall" type="checkbox" /></th>
-                    <th>分类名称</th>
-                    <th>显示</th>
-                    <th width="150">排序</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {$html_tree}
-                </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#">分类管理</a></li>
+        <li><a href="{:U('category/add')}">添加分类</a></li>
+    </ul>
+    <table class="table table-hover">
+    <thead>
+    <tr>
+        <th><input id="checkedall" class="checkedall" type="checkbox" /></th>
+        <th>分类名称</th>
+        <th>显示</th>
+        <th width="150">排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        {$html_tree}
+    </tbody>
+    </table>
 </div>
-
 <script>
 $(function(){
     $('.is_visibility').on('click',function(){

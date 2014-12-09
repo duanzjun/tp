@@ -1,41 +1,79 @@
-<include file="Public:header" />
-<div class="container-fluid">
-    <div class="row">
-        <include file="Public:sidebar" />
-        <div class="col-main">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">我的个人信息</div>
-                      <div class="panel-body">
-                        <p>您好，{$user.username}</p>
-                        <p>所属角色：{$user.role_name}</p>
-                        <hr/>
-                        <p>上次登录时间：{$user.last_login_time|date="Y-m-d H:i",###}</p>
-                        <p>上次登录IP：{$user.last_login_ip}</p>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">系统信息</h3>
-                      </div>
-                      <div class="panel-body">
-                          <p>操作系统：{$sys_info.os}</p>
-                          <p>主机地址：{$sys_info.pc}:{$sys_info.port}</p>
-                          <p>服务器软件：{$sys_info.server_software}</p>
-                          <p>上传文件：{$sys_info.upload_max_filesize}</p>
-                          <p>当前时间：{$sys_info.time}</p>
-                          <p>语言：{$sys_info.language}</p>
-                          <p>MySQL版本：{$sys_info.mysql_version}</p>
-                          <p>MYSQL大小：{$sys_info.mysql_size}</p>
-                          <p>MYSQL脚本最大执行时间：{$sys_info.max_ex_time}</p>
-                      </div>
-                    </div>
-                </div>
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>后台管理</title>
+<link rel="stylesheet" href="__STATIC__/css/bootstrap.css">
+<link rel="stylesheet" href="__STATIC__/css/admin.css">
+<script src="__STATIC__/js/jquery.js"></script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Dan Admin v1.0 <small>Bate</small></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <volist name="topmenu" id="tmu">
+            <li id="mp{$tmu.id}" onclick="tabMenu({$tmu.id})" <eq name="tmu.id" value="$Think.get.menuid">class="active"</eq>><a href="javascript:void(0);">{$tmu.name}</a></li>
+            </volist>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="glyphicon glyphicon-user"><span>{$Think.session.userinfo.username}</span></a></li>
+            <li><a class="glyphicon glyphicon-envelope" href="#"></a></li>
+            <li><a class="glyphicon glyphicon-log-out" href="{:U('public/logout')}" title="退出"></a></li>
+          </ul>
         </div>
     </div>
 </div>
-<include file="Public:footer" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sidebar">
+            <include file="Public:sidebar" />
+        </div>
+        <div class="col-main">
+            <iframe id="rframe" src="{:U('index/panel')}" frameborder="0" scrolling="auto" style="height:95%;width:100%;"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+var set_h = function(){
+    var heights = document.documentElement.clientHeight;
+    $(".col-main").height(heights);
+    var openClose = $(".col-main").height();
+    $('body').css('overflow','hidden');
+}
+$(window).resize(function(){
+    set_h();
+});
+function tabMenu(menuid){
+    $('#mp'+menuid).addClass('active').siblings().removeClass('active');
+    $.get('index.php?m=admin&c=index&a=left_menu',{menuid:menuid},function(data){
+        $('.col-sidebar').html(data);
+    });
+}
+//侧边菜单跳转
+function _MP(menuid,targetUrl) {
+  $("#menuid").val(menuid);
+  $(".col-main #rframe").attr('src', targetUrl+'&menuid='+menuid);
+  $('#mp'+menuid).addClass('active').siblings().removeClass('active');
+}
+set_h();
+tabMenu(1);
+// $(function(){
+//     //侧边菜单收缩
+//     $('.col-sidebar h5').on('click',function(){
+//         var that=$(this);
+//         var spn=that.children('span');
+//         $(this).next('.list-group').slideToggle(function(){
+//             if(that.next('.list-group').is(':hidden'))
+//                 spn.attr('class','glyphicon glyphicon-chevron-right');
+//             else
+//                 spn.attr('class','glyphicon glyphicon-chevron-down');
+//         });
+//     })
+// });
+</script>
+</body>
+</html>
