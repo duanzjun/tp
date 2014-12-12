@@ -48,10 +48,7 @@ class IndexController extends AdminController
         );
         $map['pid']=!empty($menuid) ?  $map['pid']=$menuid : 1;
         $submenu=D('Menu')->where($map)->order('sort ASC')->select();
-
-        foreach($submenu as $k=>$v){
-            $submenu[$k]['path']=U($v['module'].'/'.$v['controller'].'/'.$v['action']);
-        }
+        $submenu=$this->menuPath($submenu);
         $this->assign('submenu',$submenu);
         $this->display('Public/sidebar');
     }

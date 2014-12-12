@@ -1,0 +1,59 @@
+<form role="form" id="info_form" class="d-form form-horizontal" action="__ACTION__" method="post">
+    <notempty name="list"><input type="hidden" name="id" value="{$list.id}" /></notempty>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="name">角色名称</label>
+        <div class="col-md-8">
+            <input class="form-control" name="name" value="{$list.name}" placeholder="角色名称" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="status">状态</label>
+        <div class="col-md-8">
+            <volist name="redio_status" id="st">
+            <label class="radio-inline"><input type="radio" name="status" value="{$st.key}" <eq name="list.status" value="$st['key']">checked="checked"</eq>/>{$st.val}</label>
+            </volist>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="sort">排序</label>
+        <div class="col-md-8">
+            <input class="form-control" name="sort" value="{$list.sort|default=255}" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="remark">描述</label>
+        <div class="col-md-8">
+            <textarea class="form-control" name="remark" placeholder="描述信息">{$list.remark}</textarea>
+        </div>
+    </div>
+</form>
+<script>
+function check_form(){
+    var isSuccess=$('#info_form').validate().form();
+    return isSuccess;
+}
+$('#info_form').ajaxForm({beforeSubmit:check_form,success:complate,dataType:'json'});
+$(function(){
+    $('#info_form').validate({
+        errorElement:'span',
+        errorClass:'help-block',
+        focusInvalid:false,
+        highlight:function(element){
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        success:function(label){
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        errorPlacement:function(error,element){
+            element.parent('div').append(error);
+        },
+        rules:{
+            name:'required'
+        },
+        messages:{
+            name:'角色名称不能为空'
+        }
+    });
+});
+</script>

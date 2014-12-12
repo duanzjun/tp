@@ -3,7 +3,6 @@ namespace Admin\Controller;
 use Think\Controller;
 class AdminController extends Controller
 {
-    var $_menu=array();
     public function _initialize()
     {
         //后台用户权限检查
@@ -29,36 +28,17 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     *后台顶部菜单
-    */
-    public function topMenu($menuid)
+    public function test()
     {
-        $topmenu=M('Menu')->where('pid=0')->order('sort ASC')->select();
-        $topmenu=$this->menuPath($topmenu);
-        $this->assign('topmenu',$topmenu);
+        echo "this is test1<br/>";
     }
 
-    /**
-     * 侧边菜单列表
-    */
-    public function subMenu()
+    public function index()
     {
-        $menuid=I('menuid',0,'intval');
-        // $this->assign('submenu',$this->_menu($menuid));
-
-
-        // $map['controller']=strtolower(CONTROLLER_NAME);
-        // $map['action']=ACTION_NAME;
-        // $menu_mod=D('Menu');
-        // $curmenu=$menu_mod->where($map)->find();
-        // if(empty($curmenu)) return ;
-        // $pid=$curmenu['pid']>0 ? $curmenu['pid'] : $curmenu['id'];
-        // $submenu=$menu_mod->subAll($pid,1,1);
-        // $submenu=$this->menuPath($submenu);
-
-        // $this->assign('curmenu',$curmenu);
-        // $this->assign('submenu',$submenu);
+        $mod = D(CONTROLLER_NAME);
+        $lists=$mod->order('id DESC')->select();
+        $this->assign('lists',$lists);
+        $this->display();
     }
 
     /**
@@ -74,18 +54,6 @@ class AdminController extends Controller
             $v['param'] && $path[]=$v['param'];
             !empty($path) && $menu[$k]['path']='index.php?'.implode('&',$path);
         }
-        return $menu;
-    }
-
-    /**
-     * 后台菜单列表
-    */
-    public function get_menu()
-    {
-        $menu=array(
-            ''
-        );
-
         return $menu;
     }
 

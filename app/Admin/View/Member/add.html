@@ -1,0 +1,73 @@
+<form role="form" class="d-form form-horizontal" id="info_form" action="__ACTION__" method="post">
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="username">用户名</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" name="username" value="{$list.username}" placeholder="用户名" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="password">密码</label>
+        <div class="col-md-10">
+            <input class="form-control" type="password" name="password" placeholder="密码" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="role">所属角色</label>
+        <div class="col-md-10">
+            <select class="form-control" name="role">
+                <option value="">请选择</option>
+                <volist name="role" id="r">
+                <option value="{$r.id}" <eq name="r.id" value="$list['role']">selected="selected"</eq>>{$r.name}</option>
+                </volist>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="status">状态</label>
+        <div class="col-md-10">
+            <volist name="redio_status" id="st">
+            <label class="radio-inline"><input type="radio" name="status" value="{$st.key}" <eq name="list.status" value="$st['key']">checked="checked"</eq> />{$st.val}</label>
+            </volist>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="remark">备注</label>
+        <div class="col-md-10">
+            <textarea class="form-control" name="remark" placeholder="信息备注">{$list.remark}</textarea>
+        </div>
+    </div>
+</form>
+<script>
+function check_form(){
+    var isSuccess=$('#info_form').validate().form();
+    return isSuccess;
+}
+$('#info_form').ajaxForm({beforeSubmit:check_form,success:complate,dataType:'json'});
+$(function(){
+    $('#info_form').validate({
+        errorElement:'span',
+        errorClass:'help-block',
+        focusInvalid:false,
+        highlight:function(element){
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        success:function(label){
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+        errorPlacement:function(error,element){
+            element.parent('div').append(error);
+        },
+        rules:{
+            <empty name="list">password:'required',</empty>
+            role:'required',
+            username:'required'
+        },
+        messages:{
+            <empty name="list">password:{required:'密码不能为空'},</empty>
+            role:'请选择所属角色',
+            username:{required:'用户名不能为空'}
+        }
+    });
+});
+</script>

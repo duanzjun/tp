@@ -1,13 +1,10 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#">分类管理</a></li>
-        <li><a href="{:U('category/add')}">添加分类</a></li>
-    </ul>
-    <table class="table table-hover">
+    <div class="mg-btm10"><a class="btn btn-default" href="{:U('category/add')}">添加分类</a></div>
+    <table class="table table-hover table-bordered">
     <thead>
     <tr>
-        <th><input id="checkedall" class="checkedall" type="checkbox" /></th>
+        <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked',this.checked)" /></th>
         <th>分类名称</th>
         <th>显示</th>
         <th width="150">排序</th>

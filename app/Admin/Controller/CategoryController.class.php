@@ -18,7 +18,7 @@ class CategoryController extends AdminController
         $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
         $tree->init($categories);
-        $str="<tr><td><input type='checkbox' name='checkedid' value='\$id' /></td>".
+        $str="<tr><td class='text-center'><input type='checkbox' name='checked[]' value='\$id' /></td>".
             "<td>\$spacer\$cate_name</td>".
             "<td>\$active</td>".
             "<td>\$order_sort</td>".

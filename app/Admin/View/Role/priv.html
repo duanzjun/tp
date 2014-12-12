@@ -3,13 +3,19 @@
     <table class="table table-bordered table-hover">
         {$html_tree}
     </table>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">提交</button>
-    </div>
 </form>
 <script>
 function checknode(obj)
 {
+
+    var node_checkbox='input[name="node_id[]"]:checkbox';
+    var sibling_node=$(obj).parent('td').attr('class');
+    var parent_node=sibling_node.substr(6);
+    $('#'+parent_node+' '+node_checkbox).prop('checked',$('.'+sibling_node+' '+node_checkbox+':checked').length!==0);
+
+
+
+
     var level=$(obj).attr('level');
     var node_checkbox='input[name="node_id[]"]:checkbox';
     if(level==1) $(node_checkbox).prop('checked',obj.checked);

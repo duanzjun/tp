@@ -1,6 +1,4 @@
 $(function(){
-
-
     $('.confirmurl').on('click',function(){
         var that=$(this);
         if(confirm(that.attr('data-msg'))){
@@ -15,8 +13,28 @@ $(function(){
             })
         }
     });
-
-
+    $('*[dia-type=\'dialog\']').on('click',function(){
+        var that=$(this);
+        var d=top.dialog({
+            id:(that.attr('dia-id') ? that.attr('dia-id') : 'dialogid'),
+            okValue:'提交',
+            ok:function(){
+                if(top.$('form').length>0){
+                    top.$('form').submit();
+                }
+                return false;
+            },
+            cancelValue:'取消',
+            cancel:function(){}
+        }).showModal();
+        d.title(that.attr('dia-title'));
+        d.width(parseInt(that.attr('dia-width')));
+        d.height(parseInt(that.attr('dia-height')));
+        $.get(that.attr('dia-uri')+'&t='+(Math.random()),function(result){
+            d.content(result);
+        });
+        return false;
+    });
 });
 function demo_toggle(obj)
 {

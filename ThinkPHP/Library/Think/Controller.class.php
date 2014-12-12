@@ -18,14 +18,14 @@ abstract class Controller {
      * 视图实例对象
      * @var view
      * @access protected
-     */    
+     */
     protected $view     =  null;
 
     /**
      * 控制器参数
      * @var config
      * @access protected
-     */      
+     */
     protected $config   =   array();
 
    /**
@@ -76,7 +76,7 @@ abstract class Controller {
      * @param string $templateFile 指定要调用的模板文件
      * 默认为空 由系统自动定位模板文件
      * @param string $content 模板输出内容
-     * @param string $prefix 模板缓存前缀* 
+     * @param string $prefix 模板缓存前缀*
      * @return string
      */
     protected function fetch($templateFile='',$content='',$prefix='') {
@@ -134,7 +134,7 @@ abstract class Controller {
      * @return mixed
      */
     public function get($name='') {
-        return $this->view->get($name);      
+        return $this->view->get($name);
     }
 
     public function __get($name) {
@@ -181,9 +181,10 @@ abstract class Controller {
      * @param string $message 错误信息
      * @param string $jumpUrl 页面跳转地址
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
+     * @param string $dialogid dialog弹窗ID，用于关闭弹窗
      * @return void
      */
-    protected function error($message='',$jumpUrl='',$ajax=false) {
+    protected function error($message='',$jumpUrl='',$ajax=false,$dialogid='') {
         $this->dispatchJump($message,0,$jumpUrl,$ajax);
     }
 
@@ -195,7 +196,7 @@ abstract class Controller {
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
      * @return void
      */
-    protected function success($message='',$jumpUrl='',$ajax=false) {
+    protected function success($message='',$jumpUrl='',$ajax=false,$dialogid='') {
         $this->dispatchJump($message,1,$jumpUrl,$ajax);
     }
 
@@ -221,11 +222,11 @@ abstract class Controller {
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
                 $handler  =   isset($_GET[C('VAR_JSONP_HANDLER')]) ? $_GET[C('VAR_JSONP_HANDLER')] : C('DEFAULT_JSONP_HANDLER');
-                exit($handler.'('.json_encode($data).');');  
+                exit($handler.'('.json_encode($data).');');
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
-                exit($data);            
+                exit($data);
             default     :
                 // 用于扩展其他返回格式数据
                 Hook::listen('ajax_return',$data);
@@ -257,12 +258,13 @@ abstract class Controller {
      * @access private
      * @return void
      */
-    private function dispatchJump($message,$status=1,$jumpUrl='',$ajax=false) {
+    private function dispatchJump($message,$status=1,$jumpUrl='',$ajax=false,$dialogid='') {
         if(true === $ajax || IS_AJAX) {// AJAX提交
             $data           =   is_array($ajax)?$ajax:array();
             $data['info']   =   $message;
             $data['status'] =   $status;
             $data['url']    =   $jumpUrl;
+            $data['dialogid']=  $dialogid;
             $this->ajaxReturn($data);
         }
         if(is_int($ajax)) $this->assign('waitSecond',$ajax);

@@ -5,13 +5,18 @@
 <title>后台管理</title>
 <link rel="stylesheet" href="__STATIC__/css/bootstrap.css">
 <link rel="stylesheet" href="__STATIC__/css/admin.css">
+<link rel="stylesheet" href="__STATIC__/css/ui-dialog.css">
 <script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__/js/dialog-min.js"></script>
+<script src="__STATIC__/js/jquery.validate.js"></script>
+<script src="__STATIC__/js/jquery.form.js"></script>
+
 </head>
 <body>
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse" style="border-radius:0" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Dan Admin v1.0 <small>Bate</small></a>
+          <a class="navbar-brand" href="#">中国勘测联合网 <small>v1.0 Bate</small></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -33,13 +38,13 @@
             <include file="Public:sidebar" />
         </div>
         <div class="col-main">
-            <iframe id="rframe" src="{:U('index/panel')}" frameborder="0" scrolling="auto" style="height:95%;width:100%;"></iframe>
+            <iframe id="rframe" name="rframe" src="{:U('index/panel')}" frameborder="0" scrolling="auto" style="height:95%;width:100%;"></iframe>
         </div>
     </div>
 </div>
 <script>
 var set_h = function(){
-    var heights = document.documentElement.clientHeight;
+    var heights = document.documentElement.clientHeight-15;
     $(".col-main").height(heights);
     var openClose = $(".col-main").height();
     $('body').css('overflow','hidden');
@@ -61,19 +66,29 @@ function _MP(menuid,targetUrl) {
 }
 set_h();
 tabMenu(1);
-// $(function(){
-//     //侧边菜单收缩
-//     $('.col-sidebar h5').on('click',function(){
-//         var that=$(this);
-//         var spn=that.children('span');
-//         $(this).next('.list-group').slideToggle(function(){
-//             if(that.next('.list-group').is(':hidden'))
-//                 spn.attr('class','glyphicon glyphicon-chevron-right');
-//             else
-//                 spn.attr('class','glyphicon glyphicon-chevron-down');
-//         });
-//     })
-// });
+/*$(function(){
+    //侧边菜单收缩
+    $('.col-sidebar h5').on('click',function(){
+        var that=$(this);
+        var spn=that.children('span');
+        $(this).next('.list-group').slideToggle(function(){
+            if(that.next('.list-group').is(':hidden'))
+                spn.attr('class','glyphicon glyphicon-chevron-right');
+            else
+                spn.attr('class','glyphicon glyphicon-chevron-down');
+        });
+    })
+});*/
+
+function complate(result){
+    var did=result.dialog ? result.dialog : 'dialogid';
+    dialog.get(did).close().remove();
+    dialog({id:'tip',content:result.info}).show();
+    setTimeout(function(){
+        dialog.get('tip').close().remove();
+    },2000);
+    if(result.status==1) rframe.location.reload();
+}
 </script>
 </body>
 </html>

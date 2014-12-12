@@ -6,6 +6,11 @@ class MenuController extends AdminController
     public function index()
     {
         $menu_mod=M('Menu');
+
+
+        $f=$menu_mod->where('status=1 AND display=1 AND id=3')->getField('pid');
+        fb($f);
+
         $lists=$menu_mod->select();
         $tree=new \Org\Util\Tree;
         $menu_array=array();
@@ -47,9 +52,10 @@ class MenuController extends AdminController
 
     public function add()
     {
-        $menu_mod=M('Menu');
+        $menu_mod=D('Menu');
         if(IS_POST){
             if($menu_mod->create()){
+                $menu_mod->level=$menu_mod->pid>0?($menu_mod->getLevel($menu_mod->pid)+1):1;
                 $menu_mod->add();
                 $this->success('菜单添加成功!',U('menu/index'));
                 exit;
@@ -65,11 +71,12 @@ class MenuController extends AdminController
 
     public function edit()
     {
-        $menu_mod=M('Menu');
+        $menu_mod=D('Menu');
         if(IS_POST)
         {
             $id=I('get.id',0,'intval');
             if($menu_mod->create()){
+                $menu_mod->level=$menu_mod->pid>0?($menu_mod->getLevel($menu_mod->pid)+1):1;
                 if(false!==$menu_mod->where('id='.$id)->save()){
                     $this->success('编辑成功!',U('menu/index'));
                     exit;

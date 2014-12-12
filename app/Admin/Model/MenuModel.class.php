@@ -36,21 +36,15 @@ class MenuModel extends Model
     }
 
     /**
-     * 获取根节点数据
+     * 获取当然节点层级
     */
-    public function parentAll($pid=0)
+    var $_level=1;
+    public function getLevel($pid=0)
     {
-        $parent=$this->get_on($pid);
-        if(!empty($parent['pid'])){
-            $this->get_on($parent['pid']);
+        $pid=$this->where('status=1 AND display=1 AND id='.$pid)->getField('pid');
+        if(!empty($pid)){
+            self::getLevel($pid);
         }
-        fb($parent);
-        return $parent;
-    }
-
-    public function get_on($pid)
-    {
-        $parent=$this->where('status=1 AND display=1 AND id='.$pid)->order('id ASC')->find();
-        return $parent;
+        return $this->_level++;
     }
 }
