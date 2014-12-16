@@ -20,7 +20,7 @@
             <td>{$list.remark}</td>
             <td>{$list.status}</td>
             <td>{$list.sort}</td>
-            <td class="text-right"><a dia-type="dialog" dia-title="权限设置" dia-width="600" dia-uri="{:U('role/set_priv',array('id'=>$list['id']))}" href="javascript:void(0);">权限设置</a> |
+            <td class="text-right"><a dia-type="dialog" dia-title="权限设置" dia-width="600" dia-height="500" dia-uri="{:U('role/set_priv',array('id'=>$list['id']))}" href="javascript:void(0);">权限设置</a> |
             <a dia-type="dialog" dia-title="编辑角色" dia-width="350" dia-uri="{:U('role/edit',array('id'=>$list['id']))}" href="javascript:void(0);">修改</a> |
             <a class="confirmurl" data-msg="你确定删除【{$list.name}】吗？" data-uri="{:U('role/ajax_del',array('id'=>$list['id']))}" href="javascript:void(0);">删除</a></td>
         </tr>

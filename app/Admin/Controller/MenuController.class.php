@@ -23,7 +23,7 @@ class MenuController extends AdminController
             $n['pid'] && $param['pid']=$n['pid'];
             $n['edit']='<a href="'.U('menu/edit',$param).'">编辑</a> | ';
             $n['del']='<a class="confirmurl" data-msg="确认删除【'.$n['name'].'】？" data-uri="'.U('menu/del',array('id'=>$n['id'])).'" href="javascript:void(0);">删除</a>';
-            $n['submenu']=$n['level'] >= 3 ? '' : '<a href="'.U('menu/add',array('pid'=>$n['id'])).'">添加子节点</a> |';
+            $n['submenu']='<a href="'.U('menu/add',array('pid'=>$n['id'])).'">添加子节点</a> |';
             //菜单路径
             $path=array();
             $n['module'] && $path[]='m='.$n['module'];
