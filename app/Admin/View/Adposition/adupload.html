@@ -1,0 +1,67 @@
+<form role="form" id="info_form" class="d-form form-horizontal" enctype="multipart/form-data" action="{:U('adposition/adupload')}" method="post">
+<div class="form-group">
+    <label class="col-md-3 control-label">广告图片</label>
+    <div class="col-md-9">
+        <input type="file" name="img[]" />
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-3 control-label">链接地址</label>
+    <div class="col-md-9">
+        <input class="form-control" type="text" name="link[]" />
+        <p class="help-block">网站地址必须以http:// 开头 / 斜杠结尾</p>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-9 col-md-offset-4">
+        <button value="button" class="btn btn-primary">添加广告</button>
+    </div>
+</div>
+</form>
+
+<script>
+$(function(){
+    $('.btn-primary').on('click',function(){
+        var html='<div class="form-group">'+
+            '<label class="col-md-3 control-label">广告图片</label>'+
+            '<div class="col-md-9"><input type="file" name="img[]" /></div></div>'+
+        '<div class="form-group">'+
+            '<label class="col-md-3 control-label">链接地址</label>'+
+            '<div class="col-md-9">'+
+                '<input class="form-control" type="text" name="link[]" />'+
+                '<p class="help-block">网站地址必须以http:// 开头 / 斜杠结尾</p>'+
+            '</div>'+
+        '</div>';
+        $(this).closest('.form-group').prepend(html);
+        return false;
+    });
+    // function check_form(){
+    //     var isSuccess=$('#info_form').validate().form();
+    //     return isSuccess;
+    // }
+    $('#info_form').ajaxForm({success:complate,dataType:'json'});
+    // $('#info_form').validate({
+    //     errorElement:'span',
+    //     errorClass:'help-block',
+    //     focusInvalid:false,
+    //     highlight:function(element){
+    //         $(element).closest('.form-group').addClass('has-error');
+    //     },
+    //     success:function(label){
+    //         label.closest('.form-group').removeClass('has-error');
+    //         label.remove();
+    //     },
+    //     errorPlacement:function(error,element){
+    //         element.parent('p').append(error);
+    //     },
+    //     rules:{
+    //         img[]:'required',
+    //         link[]:'required'
+    //     },
+    //     messages:{
+    //         img[]:{required:'不能为空'},
+    //         link[]:{required:'用户名不能为空'}
+    //     }
+    // });
+});
+</script>

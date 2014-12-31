@@ -91,9 +91,11 @@ class IndexController extends AdminController
         $setting_mod=M('Setting');
         $list=$setting_mod->where('k="base_setting"')->find();
         if(IS_POST){
+            if(!empty($_FILES['logo_file']))
+            {
+                $_POST['logo']=$this->upload($_FILES['logo_file']);
+            }
             $data=array('k'=>'base_setting','v'=>json_encode($_POST));
-            $file=$this->upload();
-
             if(!empty($list)){
                 $setting_mod->where('k="base_setting"')->save($data);
             }else{

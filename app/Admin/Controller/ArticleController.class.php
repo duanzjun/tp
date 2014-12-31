@@ -34,7 +34,7 @@ class ArticleController extends AdminController
                 $this->error($article_mod->getError());
             }
         }else{
-            $html_tree=D('Common/Category')->getTreeOption();
+            $html_tree=getTreeOption('Category',0,1,array('name'=>'cate_name'));
             $this->assign('html_tree',$html_tree);
             $this->assign('curr','index_add');
             $this->display();
@@ -58,7 +58,7 @@ class ArticleController extends AdminController
             }
         }else{
             $result=$article_mod->where('id='.$id)->find();
-            $html_tree=D('Common/Category')->getTreeOption($result['cate_id']);
+            $html_tree=getTreeOption('Category',$result['cate_id'],1,array('name'=>'cate_name'));
             $this->assign('html_tree',$html_tree);
             $this->assign('result',$result);
             $this->display();
@@ -75,25 +75,5 @@ class ArticleController extends AdminController
             $this->ajaxReturn(true);
         else
             $this->ajaxReturn(false);
-    }
-
-    // public function ajax_edit()
-    // {
-    //     $id=I('get.id',0,'intval');
-    //     $field=I('get.field','','trim');
-    //     if(!in_array($field,array('visibility','sort')) || empty($id)){
-    //         $this->ajaxReturn(array('status'=>false),'JSON');
-    //     }
-    //     $model=D('Article');
-    //     $data[$field]=I('get.val',0,'intval');
-
-    //     $model->where('id='.$id)->save($data);
-    //     $this->ajaxReturn(array('status'=>true,'rel'=>$data),'JSON');
-    // }
-
-    public function images()
-    {
-        $image=new \Think\Image();
-        // $image=
     }
 }

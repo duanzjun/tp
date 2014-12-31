@@ -92,7 +92,7 @@
     line-height: 1.428571429;
     min-height: 16.428571429px;
     padding: 15px;
-    overflow:hidden; 
+    overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: bold;
@@ -109,6 +109,8 @@
     *zoom: 1;
     *display: inline;
     text-align: left;
+    overflow:hidden;
+    overflow-y:auto;
 }
 .ui-dialog-footer {
     padding: 0 20px 20px 20px;

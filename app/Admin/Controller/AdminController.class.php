@@ -5,7 +5,7 @@ class AdminController extends Controller
 {
     public function _initialize()
     {
-        //后台用户权限检查
+        // 后台用户权限检查
         if(C('USER_AUTH_ON') && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))){
             if(!\Org\Util\Rbac::AccessDecision()){
                 //检查认真识别号
@@ -26,11 +26,6 @@ class AdminController extends Controller
                 }
             }
         }
-    }
-
-    public function test()
-    {
-        echo "this is test1<br/>";
     }
 
     public function index()
@@ -60,21 +55,48 @@ class AdminController extends Controller
     /**
      * 文件上传
     */
-    public function upload()
+    public function uploadone($field='')
     {
-        $upload=new \Think\Upload();//实例化上传类
-        $upload->maxSize=3145728; //设置附件上传大小
-        $upload->exts=array('jpg','gif','png','jpeg');//设置附件上传类型
-        $upload->rootPath='d/uploads/';//设置附件上传根目录
-        $upload->savePath='';//设置附件上传（子）目录
-
-        //上传文件
-        $info=$upload->upload();
-        if(!$info){//上传错误提示信息
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     3145728 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  =     './static/uploads/'; // 设置附件上传根目录
+        // 上传单个文件
+        $info = $upload->uploadOne($field);
+        if(!$info) {// 上传错误提示错误信息
             $this->error($upload->getError());
-        }else{
-            return $file['savepath'].$file['savename'];
+        }else{// 上传成功 获取上传文件信息
+             return 'static/uploads/'.$info['savepath'].$info['savename'];
         }
+    }
+
+    public function upload($field='')
+    {
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     3145728 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  =     './static/uploads/'; // 设置附件上传根目录
+        // 上传单个文件
+
+        $info = $upload->upload($field);
+        if(!$info) {// 上传错误提示错误信息
+            $this->error($upload->getError());
+        }else{// 上传成功 获取上传文件信息
+            $file=array();
+            foreach($info as $f){
+                $file[]='static/uploads/'.$f['savepath'].$f['savename'];
+            }
+            return $file;
+        }
+    }
+
+    public function ajaxupload()
+    {
+        $upload_handler=new \Think\Uploadhandler(array(
+            'upload_url'=>'static/uploads/'.date('Ymd').'/', //图片显示地址
+            'upload_dir'=>'static/uploads/'.date('Ymd').'/', //图片存放路径
+            'script_url'=>'index.php?m=admin&c=adposition&a=adupload' //处理图片地址
+        ));
     }
 
     /**

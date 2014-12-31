@@ -84,7 +84,7 @@ class RoleController extends AdminController
                 }
             }
             $tree=new \Org\Util\Tree;
-            $str="<tr><td id='node-\$id' class='child-node-\$pid'>\$spacer <input type='checkbox' onclick='checknode(this)' level='\$level' name='node_id[]' value='\$id' \$checked /> \$name</td></tr>";
+            $str="<tr id='node-\$id' class='child-of-node-\$pid'><td>\$spacer <input type='checkbox' onclick='checknode(this)' level='\$level' name='node_id[]' value='\$id' \$checked /> \$name</td></tr>";
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $tree->init($menues);

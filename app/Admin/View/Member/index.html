@@ -10,9 +10,10 @@
             <th>用户名称</th>
             <th>所属角色</th>
             <th>用户描述</th>
+            <th>创建时间</th>
             <th>最后登录IP</th>
             <th>最后登录时间</th>
-            <th class="text-center">状态</th>
+            <th class="text-center">激活</th>
             <th class="text-right">管理操作</th>
         </tr>
         </thead>
@@ -22,6 +23,7 @@
             <td>{$list.username}</td>
             <td>{$role[$list['role']]}</td>
             <td>{$list.remark}</td>
+            <td>{$list.create_time|date="Y-m-d H:i",###}</td>
             <td>{$list.last_login_ip}</td>
             <td>{$list.last_login_time|date="Y-m-d H:i",###}</td>
             <td  class="text-center"><span class="d-cursor" d-val="{$list['status']?0:1}" d-uri="{:U('member/ajax_edit',array('id'=>$list['id'],'field'=>'status'))}" onclick="demo_toggle(this)" ><i class="glyphicon <if condition="$list['status'] eq '1'">glyphicon-ok<else/>glyphicon-remove</if>"></i></span></td>

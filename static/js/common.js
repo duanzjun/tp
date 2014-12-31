@@ -24,6 +24,9 @@ $(function(){
                 }
                 return false;
             },
+            onclose:function(){
+                console.info(this);
+            },
             cancelValue:'取消',
             cancel:function(){}
         }).showModal();

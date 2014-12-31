@@ -19,7 +19,7 @@ class Upload {
         'maxSize'       =>  0, //上传的文件大小限制 (0-不做限制)
         'exts'          =>  array(), //允许上传的文件后缀
         'autoSub'       =>  true, //自动子目录保存文件
-        'subName'       =>  array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
+        'subName'       =>  array('date', 'Ymd'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
         'rootPath'      =>  './Uploads/', //保存根路径
         'savePath'      =>  '', //保存路径
         'saveName'      =>  array('uniqid', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
@@ -85,7 +85,7 @@ class Upload {
             if($name == 'driverConfig'){
                 //改变驱动配置后重置上传驱动
                 //注意：必须选改变驱动然后再改变驱动配置
-                $this->setDriver(); 
+                $this->setDriver();
             }
         }
     }
@@ -143,7 +143,7 @@ class Upload {
             $finfo   =  finfo_open ( FILEINFO_MIME_TYPE );
         }
         // 对上传文件数组信息处理
-        $files   =  $this->dealFiles($files);    
+        $files   =  $this->dealFiles($files);
         foreach ($files as $key => $file) {
             $file['name']  = strip_tags($file['name']);
             if(!isset($file['key']))   $file['key']    =   $key;
@@ -248,7 +248,7 @@ class Upload {
     /**
      * 设置上传驱动
      * @param string $driver 驱动名称
-     * @param array $config 驱动配置     
+     * @param array $config 驱动配置
      */
     private function setDriver($driver = null, $config = null){
         $driver = $driver ? : ($this->driver       ? : C('FILE_UPLOAD_TYPE'));

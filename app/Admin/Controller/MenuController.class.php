@@ -9,8 +9,6 @@ class MenuController extends AdminController
 
 
         $f=$menu_mod->where('status=1 AND display=1 AND id=3')->getField('pid');
-        fb($f);
-
         $lists=$menu_mod->select();
         $tree=new \Org\Util\Tree;
         $menu_array=array();

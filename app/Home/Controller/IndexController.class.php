@@ -9,6 +9,45 @@ class IndexController extends CommonController
         $this->assign('articles',$articles);
     }
 
+    public function test(){
+        if(IS_POST){
+             dump($_FILES);exit;
+        }
+
+        $this->display();
+
+    }
+
+
+    public function upload(){
+
+    dump($_FILES);exit;
+
+        exit;
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     0 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  =     './static/uploads/'; // 设置附件上传根目录
+        $upload->savePath  =     ''; // 设置附件上传（子）目录
+        var_dump($upload);exit;
+        // 上传文件
+        $info   =   $upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            $this->error($upload->getError());
+        }else{// 上传成功
+            var_dump($info);
+            // $this->success('上传成功！');
+        }
+
+        // $info   =   $upload->uploadOne($_FILES['photo']);
+        // if(!$info) {// 上传错误提示错误信息
+        //     $this->error($upload->getError());
+        // }else{// 上传成功 获取上传文件信息
+        //     echo $info['savepath'].$info['savename'];
+        // }
+    }
+
+
     public function add()
     {
         if(IS_POST){

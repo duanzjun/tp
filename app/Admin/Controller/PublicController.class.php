@@ -35,7 +35,7 @@ class PublicController extends Controller
                     'last_login_time'=>time(),
                     'last_login_ip'=>get_client_ip(),
                 );
-                $user_mod->where('id='.$authInfo)->save($data);
+                $user_mod->where('id='.$authInfo['id'])->save($data);
 
                 //缓存访问权限
                 \Org\Util\Rbac::saveAccessList();

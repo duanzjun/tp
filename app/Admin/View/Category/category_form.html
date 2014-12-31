@@ -14,20 +14,21 @@
         <div class="form-group">
             <label class="col-md-2 control-label" for="cate_name">分类名称</label>
             <div class="col-md-10">
-                <input class="form-control" type="text" name="cate_name" />
+                <input class="form-control" type="text" name="cate_name" value="{$category.cate_name}" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label" for="order_sort">排序</label>
             <div class="col-md-10">
-                <input class="form-control" type="text" name="order_sort" value="255" />
+                <input class="form-control" type="text" name="order_sort" value="{$category.order_sort|default=255}" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">显示</label>
             <div class="col-md-10">
-                <label class="radio-inline"><input type="radio" name="is_active" value="1" checked="checked" /> 是</label>
-                <label class="radio-inline"><input type="radio" name="is_active" value="0" /> 否</label>
+                <volist name="redio_txt" id="txt">
+                <label class="radio-inline"><input type="radio" name="is_active" value="{$txt.key}" <eq name="category.is_active" value="$txt['key']">checked="checked"</eq>/>{$txt.val}</label>
+                </volist>
             </div>
         </div>
         <div class="form-group">

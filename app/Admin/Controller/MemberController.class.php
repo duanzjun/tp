@@ -48,16 +48,17 @@ class MemberController extends AdminController
     public function edit()
     {
         if(IS_POST){
-            if($this->_member_mod->create()){
+            $member_mod=M('Member');
+            if($member_mod->create()){
                 //密码框有值，修改密码
-                if(!empty($this->_member_mod->password))
-                    $this->_member_mod->password=md5($this->_member_mod->password);
+                if(!empty($member_mod->password))
+                    $member_mod->password=md5($member_mod->password);
                 else
-                    unset($this->_member_mod->password);
+                    unset($member_mod->password);
 
-                if($this->_member_mod->save()){
-                    $map['id']=$this->_member_mod->id;
-                    M('RoleUser')->where('user_id='.$this->_member_mod->id)->save(array('role_id'=>$this->_member_mod->role));
+                if($member_mod->save()){
+                    $map['id']=$member_mod->id;
+                    M('RoleUser')->where('user_id='.$member_mod->id)->save(array('role_id'=>$this->_member_mod->role));
                     $this->success('编辑成功','',IS_AJAX);
                     exit;
                 }else

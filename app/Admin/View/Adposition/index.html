@@ -1,0 +1,31 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10">
+        <a class="btn btn-default" href="{:U('adposition/add')}">添加广告</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>广告名称</td>
+                <td>标签</td>
+                <td>广告图片</td>
+                <td>尺寸(px)</td>
+                <td class="text-right">管理操作</td>
+            </tr>
+        </thead>
+        <volist name="lists" id="list">
+        <tr>
+            <td>{$list.ad_name}</td>
+            <td>{$list.ad_label}</td>
+            <td>
+            <volist name="list.content" id="ad">
+                <a href="{$ad.url}" target="_blank"><img style="max-width:80px;max-height:80px;margin-right:5px" src="{$ad.img}" /></a>
+            </volist>
+            </td>
+            <td>{$list.ad_width}x{$list.ad_height}</td>
+            <td class="text-right"><a href="#">编辑</a> | <a href="#">删除</a></td>
+        </tr>
+        </volist>
+    </table>
+</div>
+<include file="Public:footer" />

@@ -1,4 +1,5 @@
 <form role="form" class="d-form form-horizontal" id="info_form" action="__ACTION__" method="post">
+    <notempty name="list"><input type="hidden" name="id" value="{$list.id}" /></notempty>
     <div class="form-group">
         <label class="col-md-2 control-label" for="username">用户名</label>
         <div class="col-md-10">
