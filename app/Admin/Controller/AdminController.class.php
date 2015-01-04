@@ -92,11 +92,34 @@ class AdminController extends Controller
 
     public function ajaxupload()
     {
+        //上传初始化定义路径
         $upload_handler=new \Think\Uploadhandler(array(
             'upload_url'=>'static/uploads/'.date('Ymd').'/', //图片显示地址
             'upload_dir'=>'static/uploads/'.date('Ymd').'/', //图片存放路径
             'script_url'=>'index.php?m=admin&c=adposition&a=adupload' //处理图片地址
         ));
+        $files=$upload_handler->get_response(); //返回上传数据
+        //删除图片
+        if($_SERVER['REQUEST_METHOD']==='DELETE'){
+            if($files[I('file')]==true){
+                M('attachment')->where('filename="'.I('file').'"')->delete();
+            }
+        }else{
+            foreach($files['files'] as $k=>$v){
+                $v=is_object($v) ? (array)$v : $v;
+                $data=array(
+                    'uid'=>$_SESSION['authId'],
+                    'module'=>MODULE_NAME,
+                    'filename'=>$v['name'],
+                    'filepath'=>$v['url'],
+                    'filesize'=>$v['size'],
+                    'filetype'=>$v['type'],
+                    'isimage'=>1,
+                    'uploadtime'=>time()
+                );
+                M('attachment')->add($data);
+            }
+        }
     }
 
     /**

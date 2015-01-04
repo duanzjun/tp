@@ -23,7 +23,7 @@
             </volist>
             </td>
             <td>{$list.ad_width}x{$list.ad_height}</td>
-            <td class="text-right"><a href="#">编辑</a> | <a href="#">删除</a></td>
+            <td class="text-right"><a href="{:U('adposition/edit',array('id'=>$list['ad_id']))}">编辑</a> | <a href="#">删除</a></td>
         </tr>
         </volist>
     </table>

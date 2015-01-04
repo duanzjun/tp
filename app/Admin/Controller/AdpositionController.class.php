@@ -25,6 +25,7 @@ class AdpositionController extends AdminController
             for($i=0;$i<count($_POST['ad_img']);$i++){
                 $file[$i]['img']=$_POST['ad_img'][$i];
                 $file[$i]['url']=$_POST['ad_url'][$i];
+                $file[$i]['del']=$_POST['ad_del'][$i];
             }
             $content=json_encode($file);
             $data=array(
@@ -49,21 +50,39 @@ class AdpositionController extends AdminController
 
     public function edit()
     {
-        $id=I('get.id',0,'intval');
         $ad_mod=M('ad');
         if(IS_POST)
         {
-            if($ad_mod->create()){
-                if($ad_mod->where('ad_id='.$id)->save()){
-                    $this->success('广告编辑成功');
-                }else{
-                    $this->error('广告编辑失败');
-                }
+            $data=array();
+            if(!isset($_POST['ad_img']) || !isset($_POST['ad_url']) || empty($_POST['ad_img']) || empty($_POST['ad_url'])){
+                $this->error('请上传图片');
+            }
+            for($i=0;$i<count($_POST['ad_img']);$i++){
+                $file[$i]['img']=$_POST['ad_img'][$i];
+                $file[$i]['url']=$_POST['ad_url'][$i];
+                $file[$i]['del']=$_POST['ad_del'][$i];
+            }
+            $content=json_encode($file);
+            $data=array(
+                'ad_name'=>$_POST['ad_name'],
+                'ad_label'=>$_POST['ad_label'],
+                'ad_width'=>$_POST['ad_width'],
+                'ad_height'=>$_POST['ad_height'],
+                'status'=>$_POST['status'],
+                'content'=>$content
+            );
+            if($ad_mod->where('ad_id='.I('post.id',0,'intval'))->save($data)){
+                $this->success('广告编辑成功',U('adposition/index'));
             }else{
-                $this->error($ad_mod->getError());
+                $this->error('广告编辑失败');
             }
         }else{
-            $ad_mod->where('ad_id='.$id)->find();
+            $id=I('get.id',0,'intval');
+            $lists=$ad_mod->where('ad_id='.$id)->find();
+            if(!empty($lists['content'])){
+                $lists['content']=json_decode($lists['content'],true);
+            }
+            $this->assign('list',$lists);
             $this->assign('redio_txt',redio_txt());
             $this->display('ad_form');
         }
@@ -76,6 +95,7 @@ class AdpositionController extends AdminController
         // $options=array();
 
         $this->ajaxupload();
+
         // 实例化上传类
         // $upload_handler->options
 

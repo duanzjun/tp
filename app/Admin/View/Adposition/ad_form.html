@@ -2,24 +2,25 @@
 <div class="container-fluid">
     <div class="mg-btm10"><a class="btn btn-default" href="{:U('adposition/index')}">广告列表</a></div>
     <form role="form" class="d-form form-horizontal" enctype="multipart/form-data" action="__ACTION__" method="post">
+        <notempty name="list"><input type="hidden" name="id" value="{$list.ad_id}" /></notempty>
         <div class="form-group">
             <label class="col-md-2 control-label">广告名称</label>
             <div class="col-md-10">
-                <input class="form-control" type="text" name="ad_name" />
+                <input class="form-control" type="text" name="ad_name" value="{$list.ad_name}" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">广告定位</label>
             <div class="col-md-10">
-                <input class="form-control" type="text" name="ad_label" />
+                <input class="form-control" type="text" name="ad_label" value="{$list.ad_label}" />
                 <p class="help-block">调用广告的唯一标签</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">尺寸</label>
             <div class="col-md-10 wh">
-                <label class="radio-inline">宽<input class="form-control" type="text" name="ad_width" /></label><label class="radio-inline">X</label>
-                <label class="radio-inline">高<input class="form-control" type="text" name="ad_height" /></label>
+                <label class="radio-inline">宽<input class="form-control" type="text" name="ad_width" value="{$list.ad_width}" /></label><label class="radio-inline">X</label>
+                <label class="radio-inline">高<input class="form-control" type="text" name="ad_height" value="{$list.ad_height}" /></label>
             </div>
         </div>
         <div class="form-group">
@@ -30,7 +31,17 @@
                         <span>上传图片</span>
                         <input type="file" id="fileupload" multiple name="files[]">
                 </span>
-                <ul class="list-unstyled ad-list"></ul>
+                <ul class="list-unstyled ad-list">
+                    <volist name="list.content" id="ad">
+                    <li>
+                        <a href="{$ad.url}" target="_blank"><img src="{$ad.img}" /></a>
+                        <input type="hidden" name="ad_img[]" value="{$ad.img}" />
+                        <input type="hidden" name="ad_del[]" value="{$ad.del}" />
+                        <input class="form-control" style="display:inline" type="text" name="ad_url[]" value="{$ad.url}"/>
+                        <a class="delete" data-type="DELETE" data-url="{$ad.del}" href="javascript:void(0);">删除</a>
+                    </li>
+                    </volist>
+                </ul>
             </div>
         </div>
         <div class="form-group">
@@ -59,6 +70,7 @@ $(function () {
             $.each(data.result.files, function (index, file) {
                 var str='<li><a href="'+file.url+'" target="_blank"><img src="'+file.url+'" /></a>'+
                 '<input type="hidden" name="ad_img[]" value="'+file.url+'" />'+
+                '<input type="hidden" name="ad_del[]" value="'+file.deleteUrl+'" />'+
                 '<input class="form-control" style="display:inline" type="text" name="ad_url[]"/>'+
                 '<a class="delete" data-type="DELETE" data-url="'+file.deleteUrl+'" href="javascript:void(0);">删除</a></li>';
                 $('.ad-list').append(str);
