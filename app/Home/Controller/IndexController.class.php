@@ -18,6 +18,11 @@ class IndexController extends CommonController
 
     }
 
+    public function lists()
+    {
+        $this->display();
+    }
+
 
     public function upload(){
 
