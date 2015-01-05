@@ -26,7 +26,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">显示</label>
             <div class="col-md-10">
-                <volist name="redio_txt" id="txt">
+                <volist name="radio_txt" id="txt">
                 <label class="radio-inline"><input type="radio" name="is_active" value="{$txt.key}" <eq name="category.is_active" value="$txt['key']">checked="checked"</eq>/>{$txt.val}</label>
                 </volist>
             </div>

@@ -90,7 +90,7 @@ class AdminController extends Controller
         }
     }
 
-    public function ajaxupload()
+    public function ajaxUpload()
     {
         //上传初始化定义路径
         $upload_handler=new \Think\Uploadhandler(array(

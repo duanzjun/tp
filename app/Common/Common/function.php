@@ -25,7 +25,7 @@ function getTreeOption($model,$selected=0,$is_active=1,$field=array())
 /**
  * 表单单选按钮共用数据
 */
-function redio_txt($type='')
+function radio_txt($type='')
 {
     switch ($type){
       case 'open_close':

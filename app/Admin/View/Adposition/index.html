@@ -10,6 +10,7 @@
                 <td>标签</td>
                 <td>广告图片</td>
                 <td>尺寸(px)</td>
+                <td>显示</td>
                 <td class="text-right">管理操作</td>
             </tr>
         </thead>
@@ -23,7 +24,9 @@
             </volist>
             </td>
             <td>{$list.ad_width}x{$list.ad_height}</td>
-            <td class="text-right"><a href="{:U('adposition/edit',array('id'=>$list['ad_id']))}">编辑</a> | <a href="#">删除</a></td>
+            <td>{$list.status}</td>
+            <td class="text-right"><a href="{:U('adposition/edit',array('id'=>$list['ad_id']))}">编辑</a> |
+            <a class="confirmurl" data-msg="你确定需要删除【{$list.ad_name}】吗？" data-uri="{:U('adposition/del',array('id'=>$list['ad_id']))}" href="javascript:void(0);">删除</a></td>
         </tr>
         </volist>
     </table>

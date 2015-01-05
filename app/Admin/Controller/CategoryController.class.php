@@ -46,7 +46,7 @@ class CategoryController extends AdminController
         }else{
             $id=I('get.id',0,'intval');
             $html_tree=getTreeOption('Category',$id,1,array('name'=>'cate_name'));
-            $this->assign('redio_txt',redio_txt());
+            $this->assign('radio_txt',radio_txt());
             $this->assign('html_tree',$html_tree);
             $this->display('category_form');
         }
@@ -71,7 +71,7 @@ class CategoryController extends AdminController
             $category=$category_mod->find($id);
             $html_tree=getTreeOption('Category',$category['pid'],1,array('name'=>'cate_name'));
 
-            $this->assign('redio_txt',redio_txt());
+            $this->assign('radio_txt',radio_txt());
             $this->assign('category',$category);
             $this->assign('html_tree',$html_tree);
             $this->display('category_form');

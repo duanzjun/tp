@@ -42,10 +42,9 @@ class AdpositionController extends AdminController
                 $this->error('添加失败');
             }
         }else{
-            $this->assign('redio_txt',redio_txt());
+            $this->assign('radio_txt',radio_txt());
             $this->display('ad_form');
         }
-
     }
 
     public function edit()
@@ -83,34 +82,31 @@ class AdpositionController extends AdminController
                 $lists['content']=json_decode($lists['content'],true);
             }
             $this->assign('list',$lists);
-            $this->assign('redio_txt',redio_txt());
+            $this->assign('radio_txt',radio_txt());
             $this->display('ad_form');
         }
 
     }
 
+    public function del()
+    {
+        $id=I('get.id',0,'intval');
+        $ad_mod=M('ad');
+        $lists=$ad_mod->where('ad_id='.$id)->find();
+        if($lists){
+            $content=json_decode($lists['content'],true);
+            foreach($content as $c){
+                if(file_exists(SITE_PATH.'/'.$c['img'])){
+                    @unlink(SITE_PATH.'/'.$c['img']);
+                }
+            }
+            $ad_mod->where('ad_id='.$id)->delete();
+            $this->ajaxReturn(true);
+        }
+    }
+
     public function adupload()
     {
-
-        // $options=array();
-
-        $this->ajaxupload();
-
-        // 实例化上传类
-        // $upload_handler->options
-
-        // if(IS_POST){
-        //     $images=$this->upload();
-        //     $data=array();
-        //     for($i=0;$i<count($images);$i++){
-        //         $data[]=array(
-        //             'img'=>$images[$i],
-        //             'link'=>$_POST['link'][$i]
-        //         );
-        //     }
-        //     $this->ajaxReturn(array('info'=>$data));
-        // }else{
-        //     $this->display();
-        // }
+        $this->ajaxUpload();
     }
 }

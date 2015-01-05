@@ -29,7 +29,7 @@
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-picture"></i>
                         <span>上传图片</span>
-                        <input type="file" id="fileupload" multiple name="files[]">
+                        <input type="file" id="fileupload" multiple name="files[]" tabIndex="-1">
                 </span>
                 <ul class="list-unstyled ad-list">
                     <volist name="list.content" id="ad">
@@ -47,8 +47,8 @@
         <div class="form-group">
             <label class="col-md-2 control-label">显示</label>
             <div class="col-md-10">
-                <volist name="redio_txt" id="txt">
-                <label class="radio-inline"><input type="radio" name="status" value="{$txt.key}">{$txt.val}</label>
+                <volist name="radio_txt" id="txt">
+                <label class="radio-inline"><input type="radio" name="status" value="{$txt.key}" <eq name="list.status" value="$txt['key']">checked="checked"</eq>>{$txt.val}</label>
                 </volist>
             </div>
         </div>
@@ -62,7 +62,7 @@
 <script src="__STATIC__/js/jquery.ui.widget.js"></script>
 <script src="__STATIC__/js/jquery.fileupload.js"></script>
 <script>
-$(function () {
+$(function(){
     $('#fileupload').fileupload({
         url: "{:U('adposition/adupload')}",
         dataType: 'json',
@@ -75,7 +75,7 @@ $(function () {
                 '<a class="delete" data-type="DELETE" data-url="'+file.deleteUrl+'" href="javascript:void(0);">删除</a></li>';
                 $('.ad-list').append(str);
             });
-        }//,k
+        }//,
         // progressall: function (e, data) {
         //     var progress = parseInt(data.loaded / data.total * 100, 10);
         //     $('#progress .progress-bar').css(
@@ -96,14 +96,6 @@ $(function () {
             }
         });
     })
-    // $('.radio-inline input[type="radio"]').on('click',function(){
-    //     if($(this).val()==2){
-    //         console.info($(this).val());
-    //         $('#fileupload').attr('multiple','');
-    //     }else{
-    //         $('#fileupload').removeAttr('multiple');
-    //     }
-    // });
 });
 </script>
 <include file="Public:footer" />

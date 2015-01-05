@@ -3,7 +3,7 @@
 
 标准化
 使用jquery.js做为js封装插件
-后台弹窗统一使用artDialog插件完成，依赖于jquery
+后台弹窗统一使用artDialog v6.0.2插件完成，依赖于jquery v1.11.1
 编辑器目前使用百度编辑器（暂定）
 css样式使用目前最流行的bootstrap3.0做为样式框架
 后台共用js函数文件common.js
@@ -20,10 +20,8 @@ css样式使用目前最流行的bootstrap3.0做为样式框架
 
 表格样式 <table class="table table-bordered table-hover">
 
-
-
 模板测试选中状态
-<volist name="role" id="r">
+<volist name="radio_txt" id="txt">
 <eq name="category.is_active" value="$txt['key']">checked="checked"</eq>
 </volist>
 
@@ -37,3 +35,39 @@ ajax请求数据确认
 复选框选中或取消
 <input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked',this.checked);" />
 
+图片上传使用ajaxUpload无刷新上传图片
+<span class="btn btn-success fileinput-button">
+    <i class="glyphicon glyphicon-picture"></i>
+	<span>上传图片</span>
+	<input type="file" id="fileupload" multiple name="files[]" tabIndex="-1">
+</span>
+multiple 多图片上传
+tabIndex="-1" 获取焦点会导致文字往上偏移bug，禁止上传按钮获取焦点
+数据返回处理
+$('#fileupload').fileupload({
+        url: "{:U('adposition/adupload')}",
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                var str='<li><a href="'+file.url+'" target="_blank"><img src="'+file.url+'" /></a>'+
+                '<input type="hidden" name="ad_img[]" value="'+file.url+'" />'+
+                '<input type="hidden" name="ad_del[]" value="'+file.deleteUrl+'" />'+
+                '<input class="form-control" style="display:inline" type="text" name="ad_url[]"/>'+
+                '<a class="delete" data-type="DELETE" data-url="'+file.deleteUrl+'" href="javascript:void(0);">删除</a></li>';
+                $('.ad-list').append(str);
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+}).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+后台上传附件统一调用adminController.class.php@ajaxUpload(),附件数据统一存放在attachment表里
+
+
+
+判断数据不为空可以使用标签
+<notempty name="list"><input type="hidden" name="id" value="{$list.ad_id}" /></notempty>
