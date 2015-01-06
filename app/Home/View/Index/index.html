@@ -24,14 +24,9 @@
     <div class="pro-box pro-r">
         <h2>最新资讯</h2>
         <ul class="list-unstyled">
-          <li><a href="#">> 以人为本创基业 实干兴邦拥未来</a></li>
-          <li><a href="#">> 邦鑫勘测与东华理工大学测绘工程学院共建学生实习基地</a></li>
-          <li><a href="#">> 邦鑫勘测走进湘赣桂三地高校 启动2015届毕业生校园</a></li>
-          <li><a href="#">> 关于我司更名为 “广东邦鑫勘测科技股份有限公司”的公</a></li>
-          <li><a href="#">> 邦鑫港口三维GIS参战惠州智慧港</a></li>
-          <li><a href="#">> 惠州打造21世纪海上丝绸之路桥头堡</a></li>
-          <li><a href="#">> 公司市场团队励志广州最高峰</a></li>
-          <li><a href="#">> 邦鑫精英高效探测港珠澳大桥水下沉船</a></li>
+          <volist name="articles" id="art">
+          <li><a href="{:U('index/view',array('id'=>$art['id']))}" title="{$art.title}">> {$art.title}</a></li>
+          </volist>
         </ul>
     </div>
 </div>

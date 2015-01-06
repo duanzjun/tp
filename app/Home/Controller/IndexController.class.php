@@ -23,6 +23,14 @@ class IndexController extends CommonController
         $this->display();
     }
 
+    public function view()
+    {
+        $id=I('get.id',0,'intval');
+        $articles=M('Article')->where('id='.$id)->find();
+        $this->assign('article',$articles);
+        $this->display('view');
+    }
+
 
     public function upload(){
 

@@ -42,14 +42,18 @@
 .table-crumbs .c-l,.table-crumbs .c-r{background-color:#0A3FA0;width:50%;}
 .table-crumbs .c-c{width:940px;background-color:#ECECEC;display:block;}
 .table-crumbs .c-r{background-color:#DFDFDF;}
-.crumbs .c-side{width:215px;height:40px;background-color:#0A3FA0;color:#fff;text-align:center;}
+.crumbs .c-side{width:215px;height:40px;background-color:#0A3FA0;color:#fff;text-align:center;display:inline-block;line-height:40px;border-left:1px solid #dedede;font-size:18px;}
 .crumbs .c-cate{margin-left:10px;font-size:18px;color:#B70000;}
-.crumbs .pull-right{margin-right:10px;}
-
-
-/*.crumbs{background-color:#062b6f;height:30px;line-height:30px;}
-.crumbs .container{background-color:#ccc;}
-.crumbs .side{width:215px;background-color:#062b6f;display:inline-block;color:#fff;}*/
+.crumbs .pull-right{margin-right:10px;display:inline-block;line-height:40px;color:#000;}
+.crumbs .pull-right a{color:#000;}
+#list-main{border:1px solid #dedede;border-top:none;}
+.list-side{width:215px;padding:0 10px;float:left;}
+.list-side dl{margin-top:20px;}
+.list-side dt{background-color:#0A3FA0;color:#fff;height:25px;line-height:25px;border-radius:5px;text-indent:1em;}
+.list-side dd{height:35px;line-height:35px;border-bottom:1px solid #dedede;text-indent:2em;}
+.list-side dd:last-child{border-bottom:0;}
+.list-side dd a{color:#000;font-size:12px;}
+.all-content{float:left;width:723px;padding:20px;}
 </style>
 </head>
 <body>
@@ -63,12 +67,9 @@
           <a href="#">网站导航</a>
         </div>
         <div class="nav">
-          <a href="#">首页</a>
-          <a href="#">关于邦鑫</a>
-          <a href="#">邦鑫业务</a>
-          <a href="#">我们的优势</a>
-          <a href="#">公司业绩</a>
-          <a href="#">新闻资讯</a>
-          <a href="#">人才招聘</a>
+          <a href="./">首页</a>
+          <volist name="nav" id="n">
+          <a href="{:U('index/lists',array('cid'=>$n['id']))}" title="{$n.cate_name}">{$n.cate_name}</a>
+          </volist>
         </div>
     </div>
