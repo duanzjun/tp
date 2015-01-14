@@ -5,7 +5,7 @@
         <td class="c-l"></td>
         <td class="c-c">
             <div class="crumbs">
-                <span class="c-side">邦鑫业务</span>
+                <span class="c-side">{$cate_cur.cate_name}</span>
                 <span class="c-cate">水利水电、电力工程勘测</span>
                 <span class="pull-right"><a href="#">首页</a> > <a href="#">邦鑫业务</a> > 水利水电、电力工程勘测</span>
             </div>
@@ -17,16 +17,16 @@
 <div id="list-main" class="row">
 <div class="list-side">
     <dl>
-        <dt>+ 核心业务</dt>
-        <dd><a href="#">港口勘测</a></dd>
-        <dd><a href="#">海洋勘测</a></dd>
-        <dd><a href="#">水利水电、电力工程勘测</a></dd>
-        <dd><a href="#">市政桥梁勘测</a></dd>
-        <dt>+ 发展业务</dt>
-        <dd><a href="#">港口海洋水利技术咨询合作</a></dd>
-        <dd><a href="#">设计施工总承包整合咨询合作</a></dd>
-        <dd><a href="#">勘测设备销售、维修与检定</a></dd>
-        <dd><a href="#">勘测技术输出与合作</a></dd>
+        <volist name="category" id="cate">
+        <notempty name="cate.child">
+        <dt>+ {$cate.cate_name}</dt>
+        <volist name="cate.child" id="child">
+            <dd><a href="{:U('index/view',array('cid'=>$child['id']))}">{$child.cate_name}</a></dd>
+        </volist>
+        <else />
+            <dd><a href="{:U('index/view',array('cid'=>$cate['id']))}">{$cate.cate_name}</a></dd>
+        </notempty>
+        </volist>
     </dl>
 </div>
 <div class="all-content">

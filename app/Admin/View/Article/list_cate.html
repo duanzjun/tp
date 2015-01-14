@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10">
+        <a class="btn btn-default" href="{:U('article/add')}">添加内容</a>
+    </div>
+    <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>栏目名称</th>
+        <th>文章数量</th>
+        <th>栏目类型</th>
+        <th>显示</th>
+        <th class="text-right">操作管理</th>
+    </tr>
+    </thead>
+    <foreach name="lists" item="lst">
+    <tr id="lst-{$lst.id}" class="lst-parent">
+        <td><i class="glyphicon glyphicon-plus"></i>{$lst.cate_name}</td>
+        <td class="">{$ctype[$lst['ctype']]}</td>
+        <td></td>
+        <td>{$lst.is_active}</td>
+        <td></td>
+    </tr>
+    <foreach name="lst._child" item="chd">
+    <tr class="lst-child lst-{$lst.id}-child">
+        <td><i class="glyphicon glyphicon-minus"></i>{$chd.cate_name}</td>
+        <td>{$ctype[$chd['ctype']]}</td>
+        <td>{$artcnt[$chd['id']]|default=0}</td>
+        <td>{$chd.is_active}</td>
+        <td class="text-right"><a href="{:U('article/index',array('cid'=>$chd['id']))}">文章列表</a></td>
+    </tr>
+    </foreach>
+    </foreach>
+    </table>
+</div>
+<script>
+$('.lst-parent').on('click',function(){
+    if($('.'+$(this).attr('id')+'-child').is(':hidden')){
+        $(this).find('td i').prop('class','glyphicon glyphicon-minus');
+    }else{
+        $(this).find('td i').prop('class','glyphicon glyphicon-plus');
+    }
+    $('.'+$(this).attr('id')+'-child').fadeToggle();
+});
+</script>
+<include file="Public:footer" />

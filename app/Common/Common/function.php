@@ -23,6 +23,39 @@ function getTreeOption($model,$selected=0,$is_active=1,$field=array())
 }
 
 /**
+ * 分类列表生成树型结构
+ * @param array $list 分类列表数据
+ * @param int $root 生成当前ID下的树型分类
+ * @param string $id 分类ID字段
+ * @param string $pid 父级ID字段
+ * @param string $child 子级名
+*/
+function list_to_tree($list, $root = 0, $pk='id', $pid = 'pid', $child = '_child') {
+    // 创建Tree
+    $tree = array();
+    if(is_array($list)) {
+        // 创建基于主键的数组引用
+        $refer = array();
+        foreach ($list as $key => $data) {
+            $refer[$data[$pk]] =& $list[$key];
+        }
+        foreach ($list as $key => $data) {
+            // 判断是否存在parent
+            $parentId =  $data[$pid];
+            if ($root == $parentId) {
+                $tree[] =& $list[$key];
+            }else{
+                if (isset($refer[$parentId])) {
+                    $parent =& $refer[$parentId];
+                    $parent[$child][] =& $list[$key];
+                }
+            }
+        }
+    }
+    return $tree;
+}
+
+/**
  * 表单单选按钮共用数据
 */
 function radio_txt($type='')

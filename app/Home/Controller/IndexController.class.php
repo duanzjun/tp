@@ -9,28 +9,6 @@ class IndexController extends CommonController
         $this->assign('articles',$articles);
     }
 
-    public function test(){
-        if(IS_POST){
-             dump($_FILES);exit;
-        }
-
-        $this->display();
-
-    }
-
-    public function lists()
-    {
-        $this->display();
-    }
-
-    public function view()
-    {
-        $id=I('get.id',0,'intval');
-        $articles=M('Article')->where('id='.$id)->find();
-        $this->assign('article',$articles);
-        $this->display('view');
-    }
-
 
     public function upload(){
 

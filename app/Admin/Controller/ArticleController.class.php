@@ -6,8 +6,10 @@ class ArticleController extends AdminController
 {
     public function index()
     {
+        $cid=I('cid',0,'intval');
         $model = M('Article');
-        $result=$model->order('order_sort ASC,id DESC')->page(I('get.p',0,'intval').',10')->select();
+        $map=array('cate_id'=>$cid);
+        $result=$model->where($map)->order('order_sort ASC,id DESC')->page(I('get.p',0,'intval').',10')->select();
         $count=$model->count();
         $Page=new \Think\Page($count,10);
         $Page->setConfig('prev','上一页');
@@ -16,6 +18,21 @@ class ArticleController extends AdminController
         $this->assign('page',$show);
         $this->assign('result',$result);
         $this->assign('curr','index');
+        $this->display();
+    }
+
+    public function list_cate()
+    {
+        $cate_mod=D('Category');
+        $categories=$cate_mod->select();
+        $lists=list_to_tree($categories);
+        $article_cnt=M('Article')->field('cate_id,count(\'cate_id\') as c')->group('cate_id')->select();
+        foreach($article_cnt as $cnt){
+            $artCnt[$cnt['cate_id']]=$cnt['c'];
+        }
+        $this->assign('ctype',$cate_mod->_ctype);
+        $this->assign('artcnt',$artCnt);
+        $this->assign('lists',$lists);
         $this->display();
     }
 

@@ -13,7 +13,7 @@ left:0;display:block;z-index:1000;overflow-x:hidden;overflow-y:auto;border-right
 .d-cursor{cursor:pointer;}
 .wd50{width:50px;}
 .mg-btm10{margin-bottom:10px;}
-.table .glyphicon{display:block;cursor:pointer;}
+.table .glyphicon{display:inline-block;cursor:pointer;margin-right:5px;}
 .site-logo{max-width:120px;max-height:120px; }
 .wh .radio-inline{padding-left:0;}
 .wh .form-control{width:60px;display:inline-block;margin-left:10px;}
@@ -23,3 +23,5 @@ left:0;display:block;z-index:1000;overflow-x:hidden;overflow-y:auto;border-right
 .ad-list{margin-top:10px;}
 .ad-list li{display:block;}
 .ad-list img{max-width:100px;max-height:100px}
+.lst-child{display:none;}
+.lst-child .glyphicon{text-indent:1em;}

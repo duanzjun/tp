@@ -6,26 +6,28 @@ class CategoryController extends AdminController
     public function index()
     {
         $cate_mod=D('Common/Category');
-        $categories=$cate_mod->getAll(0);
+        // $categories=$cate_mod->getAll(0);
 
-        foreach($categories as $key=>$cate){
-            $categories[$key]['active']='<span class="d-cursor" data-val="'.(1-$cate['is_active']).'" ><i class="glyphicon '.($cate['is_active']?'glyphicon-ok':'glyphicon-remove').'"></i></span>';
-            $categories[$key]['child_cate']='<a href="'.U('category/add',array('id'=>$cate['id'])).'">添加子分类</a>';
-            $categories[$key]['edit']='<a href="'.U('category/edit',array('id'=>$cate['id'])).'">编辑</a>';
-            $categories[$key]['del']='<a class="confirmurl" data-msg="你确定删除【'.$cate['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="'.U('category/del',array('id'=>$cate['id'])).'" href="#">删除</a>';
-        }
+        // foreach($categories as $key=>$cate){
+        //     $categories[$key]['active']='<span class="d-cursor" data-val="'.(1-$cate['is_active']).'" ><i class="glyphicon '.($cate['is_active']?'glyphicon-ok':'glyphicon-remove').'"></i></span>';
+        //     $categories[$key]['child_cate']='<a href="'.U('category/add',array('id'=>$cate['id'])).'">添加子分类</a>';
+        //     $categories[$key]['edit']='<a href="'.U('category/edit',array('id'=>$cate['id'])).'">编辑</a>';
+        //     $categories[$key]['del']='<a class="confirmurl" data-msg="你确定删除【'.$cate['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="'.U('category/del',array('id'=>$cate['id'])).'" href="#">删除</a>';
+        // }
 
-        $tree=new \Org\Util\Tree;
-        $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
-        $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-        $tree->init($categories);
-        $str="<tr><td class='text-center'><input type='checkbox' name='checked[]' value='\$id' /></td>".
-            "<td>\$spacer\$cate_name</td>".
-            "<td>\$active</td>".
-            "<td>\$order_sort</td>".
-            "<td>\$child_cate | \$edit | \$del</td></tr>";
-        $html_tree = $tree->get_tree(0, $str);
-        $this->assign('html_tree',$html_tree);
+        // $tree=new \Org\Util\Tree;
+        // $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
+        // $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+        // $tree->init($categories);
+        // $str="<tr><td class='text-center'><input type='checkbox' name='checked[]' value='\$id' /></td>".
+        //     "<td>\$spacer\$cate_name</td>".
+        //     "<td>\$active</td>".
+        //     "<td>\$order_sort</td>".
+        //     "<td>\$child_cate | \$edit | \$del</td></tr>";
+        // $html_tree = $tree->get_tree(0, $str);
+        // $this->assign('html_tree',$html_tree);
+        $categories=$cate_mod->select();
+        $categories=list_to_tree($categories);
         $this->assign('categories',$categories);
         $this->display();
     }
