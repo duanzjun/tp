@@ -1,0 +1,41 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10">
+        <a class="btn btn-danger" href="{:U('news/add',array('catid'=>$catid))}" title="添加新闻">添加新闻</a>
+        <p>排序按数字越小越靠前</p>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>排序</th>
+                <th>标题</th>
+                <th>访问量</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <notempty name="lists">
+            <volist name="lists" id="list">
+            <tr>
+                <td>{$list.order_sort}</td>
+                <td>{$list.title}</td>
+                <td>{$list.hits}</td>
+                <td>{$list.updatetime|date="Y-m-d H:i",###}</td>
+                <td><a href="{:U('news/edit',array('id'=>$list['id']))}">编辑</a>&nbsp;&nbsp;<a class="confirmurl" dia-uri="{:U('news/del',array('id'=>$list['id']))}" dia-msg="您确认删除新闻【{$list.title}】吗？" href="javascript:;">删除</a></td>
+            </tr>
+            </volist>
+            <else/>
+            <tr><td colspan="5" class="text-center">还没有新闻内容！</td></tr>
+            </notempty>
+        </tbody>
+    </table>
+    <div class="text-right">{$page}</div>
+</div>
+<script src="__STATIC__/js/modules/sea.js"></script>
+<script>
+seajs.use(['common'],function(){
+    seajs.use(['common/confirm']);
+});
+</script>
+<include file="Public:footer" />

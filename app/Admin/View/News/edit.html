@@ -1,0 +1,58 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10"><a class="btn btn-default" href="{:U('article/index')}">内容列表</a></div>
+    <form role="form" class="d-form form-horizontal" action="" method="post">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="title">标题</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="title" value="{$result.title}" style="width:650px" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="cate_id">所属分类</label>
+            <div class="col-md-10">
+                <select class="form-control" name="cate_id">
+                    {$html_tree}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+            <script id="d-container" name="content" type="text/plain">
+            {$result.content}
+            </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="order_sort">排序</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="order_sort" value="{$result.order_sort}" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="publish">发布</label>
+            <div class="col-md-10">
+                <label class="radio-inline"><input type="radio" name="publish" value="1" <if condition="1 eq $result['publish']"> checked="checked"</if> />是</label>
+                <label class="radio-inline"><input type="radio" name="publish" value="0" <if condition="0 eq $result['publish']"> checked="checked"</if> />否</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+            <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script src="__STATIC__/js/ueditor/ueditor.all.js"></script>
+<script>
+    var ue = UE.getEditor('d-container',{
+    toolbars: [
+        ['fullscreen', 'source', 'undo', 'redo', 'bold']
+    ],
+    initialFrameWidth:650,
+    initialFrameHeight:350,
+    autoHeight:true
+    });
+</script>
+<include file="footer" />

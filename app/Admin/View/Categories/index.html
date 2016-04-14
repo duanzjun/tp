@@ -1,0 +1,104 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10"><a class="btn btn-danger" dia-type="dialog" dia-title="添加一级栏目" dia-uri="{:U('categories/add')}" dia-width="450" href="javascript:;">添加一级栏目</a>
+    <a class="btn btn-danger setting-cate" href="javascript:;">展开全部栏目</a></div>
+    <table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked',this.checked)" /></th>
+        <th width="150">排序</th>
+        <th width="360">栏目名称</th>
+        <th>栏目类型</th>
+        <th>所属模型</th>
+        <th>导航栏显示</th>
+        <th class="text-right">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="lists" id="list">
+    <tr id="{$list.id}" class="lst-parent">
+        <td class='text-center'><input type='checkbox' name='checked[]' value='{$list.id}' /></td>
+        <td><input class="form-control" type="text" name="order_sort[{$list.id}]" value="{$list.order_sort}"></td>
+        <td><i class="fa fa-caret-right"></i><input class="form-control w300" type="text" name="cate_name[{$list.id}]" value="{$list.cate_name}"></td>
+        <td>{$_type[$list['ctype']]}</td>
+        <td>{$_module[$list['module']]}</td>
+        <td><select class="form-control" name="nav[{$list.id}]">
+            <volist name="_nav" id="nav">
+            <option value="{$key}">{$nav}</option>
+            </volist>
+        </select></td>
+        <td class="text-right"><a dia-type="dialog" dia-title="添加【{$list.cate_name}】子栏目" dia-uri="{:U('categories/add',array('id'=>$list['id']))}" dia-width="450" href="javascript:;">添加子栏目</a> | <a class="confirmurl" data-msg="你确定删除【'.$list['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="{:U('categories/del',array('id'=>$list['id']))}" href="#">删除</a></td>
+    </tr>
+        <volist name="list.child" id="child">
+    <tr id="{$child.id}" class="lst-child lst-child-{$list.id}">
+        <td class='text-center'><input type='checkbox' name='checked[]' value='{$child.id}' /></td>
+        <td><input class="form-control" type="text" name="order_sort[{$child.id}]" value="{$child.order_sort}"></td>
+        <td class="lst-child-name"><input class="form-control w300" type="text" name="cate_name[{$child.id}]" value="{$child.cate_name}"></td>
+        <td>{$_type[$child['ctype']]}</td>
+        <td>{$_module[$child['module']]}</td>
+        <td><select class="form-control" name="nav[{$child.id}]">
+            <volist name="_nav" id="nav">
+            <option value="{$key}">{$nav}</option>
+            </volist>
+        </select></td>
+        <td class="text-right"><a class="confirmurl" data-msg="你确定删除【'.$cate['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="{:U('categories/del',array('id'=>$cate['id']))}" href="#">删除</a></td>
+    </tr>
+        </volist>
+    </volist>
+    <tr>
+        <td class="text-center"><input type="checkbox" onclick="$('input[name*=\'checked\']').prop('checked',this.checked)" /></td>
+        <td colspan="6"><button class="btn btn-blue" onclick="columnedit()">保存</button>
+        <button class="btn btn-blue">删除</button></td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+<script src="__STATIC__/js/modules/sea.js"></script>
+<script>
+$(function(){
+    $('.setting-cate').on('click',function(){
+        if($('tr.lst-child:hidden').length > 0){
+            $(this).html('隐藏全部栏目')
+            $('.lst-parent').find('i').attr('class','fa fa-caret-down');
+            $('tr.lst-child').show();
+        }else{
+            $('.lst-parent').find('i').attr('class','fa fa-caret-right');
+            $(this).html('展开全部栏目');
+            $('tr.lst-child').hide();
+        }
+    });
+    $('.lst-parent').on('click','td:eq(2) i',function(){
+        if($(this).hasClass('fa-caret-right')){
+            var _id = $(this).attr('class','fa fa-caret-down').closest('.lst-parent').attr('id');
+            $('.lst-child-'+_id).show();
+        }else{
+            var _id = $(this).attr('class','fa fa-caret-right').closest('.lst-parent').attr('id');
+            $('.lst-child-'+_id).hide();
+        }
+    });
+});
+function columnedit(){
+    var s = [],
+        ids = [];
+    $('input[name*=\'checked\']:checked').each(function(i){
+        ids[ids.length]=this.value;
+        s[s.length]= encodeURIComponent('order_sort['+this.value+']' ) + "=" + encodeURIComponent( $('input[name="order_sort['+this.value+']"]').val() );
+        s[s.length]= encodeURIComponent('nav['+this.value+']' ) + "=" + encodeURIComponent( $('select[name="nav['+this.value+']"] option:selected').val() );
+    })
+    if(ids.length>0){
+        $.post("{:U('categories/editcol')}",'ids='+ids.join(',')+'&'+s.join( "&" ),function(result){
+            seajs.use('dialog',function(dialog){
+                var d = dialog({content:result?'更新成功':'更新失败'}).show();
+                setTimeout(function (){
+                    d.close().remove();
+                    result || location.reload();
+                },2000);
+            });
+        });
+    }
+}
+seajs.use('common',function(){
+    seajs.use('common/dialog');
+})
+</script>
+<include file="Public:footer" />

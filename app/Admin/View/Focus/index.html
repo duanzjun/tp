@@ -1,0 +1,36 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10">
+        <a class="btn btn-danger" dia-type="dialog" dia-title="添加图片" dia-width="300" dia-uri="{:U('focus/add')}" href="javascript:void(0);" title="添加图片">添加图片</a>
+        <p>排序按数字越小越靠前</p>
+    </div>
+    <table class="table table-bordered focus-pic">
+        <thead>
+            <tr>
+                <td>排序</td>
+                <th>图片</th>
+                <th>链接地址</th>
+                <th>标题</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="lists" id="list">
+            <tr>
+                <td>{$list.adv_sort}</td>
+                <td class="adv-pic"><img src="{$list.adv_pic}"></td>
+                <td>{$list.adv_link}</td>
+                <td>{$list.adv_title}</td>
+                <td><a dia-type="dialog" dia-title="编辑图片" dia-width="300" dia-uri="{:U('focus/edit',array(id=>$list['adv_id']))}" href="javascript:;">编辑</a>&nbsp;&nbsp;<a class="confirmurl" dia-uri="{:U('focus/del',array('id'=>$list['adv_id']))}" dia-msg="您确认删除图片-{$list.adv_title}吗？" href="javascript:;">删除</a></td>
+            </tr>
+            </volist>
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/js/modules/sea.js"></script>
+<script>
+seajs.use(['common'],function(){
+    seajs.use(['common/dialog','common/confirm']);
+});
+</script>
+<include file="Public:footer" />

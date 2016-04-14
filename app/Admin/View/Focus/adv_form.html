@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <form role="form" class="dia-form form-horizontal" action="__ACTION__" method="post">
+        <notempty name="list"><input type="hidden" name="adv_id" value="{$list.adv_id}" /></notempty>
+        <div class="form-group">
+        <div class="col-md-12 focus-up" <notempty name="list.adv_pic">style="background:url({$list['adv_pic']});background-size:300px 100px"</notempty>>
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-picture"></i>
+                        <span>上传图片</span>
+                        <input type="file" id="fileupload" name="files" tabIndex="-1">
+                </span>
+                <input type="hidden" name="adv_pic" value="{$list.adv_pic}">
+            </div>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="adv_title" value="{$list.adv_title}" placeholder="图片名称" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="adv_link" value="{$list.adv_link}" placeholder="链接地址" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="adv_sort" value="{$list.adv_sort}" placeholder="排序" />
+        </div>
+    </form>
+</div>
+<script>
+seajs.use('fileupload',function(){
+    $('#fileupload').fileupload({
+        url: "{:U('focus/adupload')}",
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('.focus-up').css({'background':'url("'+file.url+'") no-repeat','background-size':'300px 100px'});
+                $('input[name="adv_pic"]').val(file.url);
+            });
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+})
+</script>

@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <div class="mg-btm10">
+        <a class="btn btn-danger" dia-type="dialog" dia-title="添加链接" dia-width="300" dia-uri="{:U('links/add')}" href="javascript:void(0);" title="添加链接">添加链接</a>
+        <p>排序按数字越小越靠前</p>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>排序</td>
+                <th>网站名称</th>
+                <th>链接地址</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="lists" id="list">
+            <tr>
+                <td>{$list.linkspic}</td>
+                <td>{$list.title}</td>
+                <td>{$list.linkurl}</td>
+                <td><a dia-type="dialog" dia-title="编辑链接" dia-width="300" dia-uri="{:U('links/edit',array(id=>$list['yqid']))}" href="javascript:;">编辑</a>&nbsp;&nbsp;<a class="confirmurl" dia-uri="{:U('links/del',array('id'=>$list['yqid']))}" dia-msg="您确认删除链接-{$list.title}吗？" href="javascript:;">删除</a></td>
+            </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="text-right">{$page}</div>
+</div>
+<script src="__STATIC__/js/modules/sea.js"></script>
+<script>
+seajs.use(['common'],function(){
+    seajs.use(['common/dialog','common/confirm']);
+});
+</script>
+<include file="Public:footer" />

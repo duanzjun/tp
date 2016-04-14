@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <form class="d-form form-horizontal" role="form" action="__ACTION__" method="post">
+        <notempty name="Think.get.id">
+            <input type="hidden" name="pid" value="{$Think.get.id}">
+        </notempty>
+        <div class="form-group">
+            <label class="col-md-4 control-label">栏目名称</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" name="cate_name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">栏目类型</label>
+            <div class="col-md-8">
+                <select class="form-control" name="ctype">
+                    <volist name="_type" id="c">
+                    <option value="{$key}">{$c}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">所属模型</label>
+            <div class="col-md-8">
+                <select class="form-control" name="module">
+                    <volist name="_module" id="m">
+                    <option value="{$key}">{$m}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">导航栏显示</label>
+            <div class="col-md-8">
+                <select class="form-control" name="nav">
+                    <volist name="_nav" id="n">
+                    <option value="{$key}">{$n}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="order_sort">排序</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" name="order_sort" value="{$category.order_sort|default=255}" />
+            </div>
+        </div>
+    </form>
+</div>

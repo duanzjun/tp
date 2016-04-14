@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<div class="container-fluid">
+    <form role="form" class="d-form form-horizontal" action="" method="post">
+    <if condition="$Think.const.ACTION_NAME eq 'edit'">
+    <input type="hidden" name="cateid" value="{$list.cateid}">
+    <else/>
+    <input type="hidden" name="cateid" value="{$Think.get.catid}">
+    </if>
+    <div class="ui-form">
+        <h3>单网页</h3>
+        <dl>
+            <dt>标题</dt>
+            <dd>
+                <div class="fbox">
+                    <input class="form-control input-wdh350" type="text" name="title" value="{$list.title}" placeholder="标题" />
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>关键词</dt>
+            <dd>
+                <div class="fbox">
+                    <input class="form-control input-wdh350" type="text" name="keywords" value="{$list.keywords}" placeholder="关键词"/>
+                    <span class="tips">多关键词之间用空格或者“,”隔开</span>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>内容</dt>
+            <dd>
+                <div class="fbox">
+                    <script type="text/plain" id="myEditor" name="content" style="width:1000px;height:280px;">{$list.content}</script>
+                </div>
+            </dd>
+        </dl>
+        <dl><dt></dt><dd><button type="submit" class="btn btn-blue">提交</button></dd></dl>
+    </div>
+    </form>
+</div>
+<link href="__STATIC__/js/ueditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script charset="utf-8" src="__STATIC__/js/ueditor/umeditor.config.js"></script>
+<script charset="utf-8" src="__STATIC__/js/ueditor/umeditor.min.js"></script>
+<script>
+var um = UM.getEditor('myEditor');
+</script>
+<include file="footer" />
