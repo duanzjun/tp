@@ -5,35 +5,37 @@ class AdminController extends Controller
 {
     public function _initialize()
     {
+
         // 后台用户权限检查
-        if(C('USER_AUTH_ON') && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))){
-            if(!\Org\Util\Rbac::AccessDecision()){
-                //检查认真识别号
-                if(!$_SESSION[C('USER_AUTH_KEY')]){
-                    //跳转到认证网关
-                    redirect(PHP_FILE.C('USER_AUTH_GATEWAY'));
-                }
-                //没有权限 抛出错误
-                if(C('RBAC_ERROR_PAGE')){
-                    //定义权限错误页面
-                    redirect(C('RBAC_ERROR_PAGE'));
-                }else{
-                    if(C('GUEST_AUTH_ON')){
-                        $this->assign('jumpUrl',PHP_FILE.C('USER_AUTH_GATEWAY'));
-                    }
-                    //提示错误信息
-                    $this->error(L('_VALID_ACCESS_'));
-                }
-            }
-        }
+        // if(C('USER_AUTH_ON') && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))){
+        //     if(!\Org\Util\Rbac::AccessDecision()){
+        //         //检查认真识别号
+        //         if(!$_SESSION[C('USER_AUTH_KEY')]){
+        //             //跳转到认证网关
+        //             redirect(PHP_FILE.C('USER_AUTH_GATEWAY'));
+        //         }
+        //         //没有权限 抛出错误
+        //         if(C('RBAC_ERROR_PAGE')){
+        //             //定义权限错误页面
+        //             redirect(C('RBAC_ERROR_PAGE'));
+        //         }else{
+        //             if(C('GUEST_AUTH_ON')){
+        //                 $this->assign('jumpUrl',PHP_FILE.C('USER_AUTH_GATEWAY'));
+        //             }
+        //             //提示错误信息
+        //             $this->error(L('_VALID_ACCESS_'));
+        //         }
+        //     }
+        // }
+        $this->menuCate();
     }
 
     public function index()
     {
-        $mod = D(CONTROLLER_NAME);
-        $lists=$mod->order('id DESC')->select();
-        $this->assign('lists',$lists);
-        $this->display();
+        // $mod = D(CONTROLLER_NAME);
+        // $lists=$mod->order('id DESC')->select();
+        // $this->assign('lists',$lists);
+        // $this->display();
     }
 
     /**
@@ -50,6 +52,22 @@ class AdminController extends Controller
             !empty($path) && $menu[$k]['path']='index.php?'.implode('&',$path);
         }
         return $menu;
+    }
+
+    public function menuCate()
+    {
+        $cate_mod = M('Categories');
+        $lists = $cate_mod->order('order_sort ASC')->select();
+        $cate = array();
+        foreach($lists as $val)
+        {
+            if($val['pid'] == 0){
+                $cate[$val['id']] = $val;
+            }else{
+                $cate[$val['pid']]['child'][] = $val;
+            }
+        }
+        $this->assign('menu_cate',$cate);
     }
 
     /**
@@ -96,30 +114,9 @@ class AdminController extends Controller
         $upload_handler=new \Think\Uploadhandler(array(
             'upload_url'=>'static/uploads/'.date('Ymd').'/', //图片显示地址
             'upload_dir'=>'static/uploads/'.date('Ymd').'/', //图片存放路径
-            'script_url'=>'index.php?m=admin&c=adposition&a=adupload' //处理图片地址
+            'script_url'=>'index.php?m=admin&c=focus&a=adupload' //处理图片地址
         ));
         $files=$upload_handler->get_response(); //返回上传数据
-        //删除图片
-        if($_SERVER['REQUEST_METHOD']==='DELETE'){
-            if($files[I('file')]==true){
-                M('attachment')->where('filename="'.I('file').'"')->delete();
-            }
-        }else{
-            foreach($files['files'] as $k=>$v){
-                $v=is_object($v) ? (array)$v : $v;
-                $data=array(
-                    'uid'=>$_SESSION['authId'],
-                    'module'=>MODULE_NAME,
-                    'filename'=>$v['name'],
-                    'filepath'=>$v['url'],
-                    'filesize'=>$v['size'],
-                    'filetype'=>$v['type'],
-                    'isimage'=>1,
-                    'uploadtime'=>time()
-                );
-                M('attachment')->add($data);
-            }
-        }
     }
 
     /**

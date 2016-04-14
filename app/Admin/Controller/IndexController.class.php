@@ -5,10 +5,6 @@ class IndexController extends AdminController
 {
     public function index()
     {
-        $menu_mod=D('Menu');
-        //顶部菜单列表
-        $topmenu=$menu_mod->where('status=1 AND display=1 AND pid=0')->order('sort ASC')->select();
-        $this->assign('topmenu',$topmenu);
         $this->display();
     }
 
@@ -33,24 +29,6 @@ class IndexController extends AdminController
         $this->assign('sys_info',$sys_info);
         $this->assign('user',$userinfo);
         $this->display();
-    }
-
-    /**
-     * 左侧菜单列表
-    */
-    public function left_menu()
-    {
-        $menuid=I('menuid',0,'intval');
-        $pid=I('pid',0,'intval');
-        $map=array(
-            'display'=>1,
-            'status'=>1
-        );
-        $map['pid']=!empty($menuid) ?  $map['pid']=$menuid : 1;
-        $submenu=D('Menu')->where($map)->order('sort ASC')->select();
-        $submenu=$this->menuPath($submenu);
-        $this->assign('submenu',$submenu);
-        $this->display('Public/sidebar');
     }
 
     /**
@@ -87,27 +65,17 @@ class IndexController extends AdminController
     */
     public function setting()
     {
-        echo define('__STATIC__');
-        $setting_mod=M('Setting');
-        $list=$setting_mod->where('k="base_setting"')->find();
+        $conf_mod=M('Config');
+        $list = $conf_mod->find();
         if(IS_POST){
-            if(!empty($_FILES['logo_file']))
-            {
-                $_POST['logo']=$this->upload($_FILES['logo_file']);
-            }
-            $data=array('k'=>'base_setting','v'=>json_encode($_POST));
-            if(!empty($list)){
-                $setting_mod->where('k="base_setting"')->save($data);
-            }else{
-                $setting_mod->add($data);
-            }
+            $id = I('id',1,'intval');
+            unset($_POST['id']);
+            $conf_mod->where('config_id='.$id)->save($_POST);
             $this->success('设置成功',U('index/setting'));
         }else{
-            if(!empty($list)){
-                $list=json_decode($list['v'],true);
-                $this->assign('setting',$list);
-            }
+            $this->assign('setting',$list);
             $this->display();
         }
     }
+
 }

@@ -1,6 +1,20 @@
-<!-- <h5><strong>用户管理</strong><span class="glyphicon glyphicon-chevron-down"></span></h5> -->
+<h5><i class="fa fa-caret-right"></i>综合管理</h5>
 <div class="list-group">
-    <volist name="submenu" id="smu">
-    <a id="mp{$smu.id}" class="list-group-item" href="javascript:_MP({$smu.id},'{$smu.path}');">{$smu.name}</a>
+    <a class="list-group-item" href="javascript:_MP('{:U('index/setting')}')"><i class="fa fa-chevron-right"></i>参数设置</a>
+    <a class="list-group-item" href="#"><i class="fa fa-chevron-right"></i>用户管理</a>
+    <a class="list-group-item" href="javascript:_MP('{:U('links/index')}')"><i class="fa fa-chevron-right"></i>友情链接</a>
+    <a class="list-group-item" href="javascript:_MP('{:U('focus/index')}')"><i class="fa fa-chevron-right"></i>首页轮播图片</a>
+    <a class="list-group-item" href="javascript:_MP('{:U('categories/index')}')"><i class="fa fa-chevron-right"></i>配置栏目</a>
+</div>
+<volist name="menu_cate" id="mu">
+<h5><i class="fa fa-caret-right"></i>{$mu.cate_name}</h5>
+<div class="list-group">
+    <volist name="mu.child" id="cld">
+    <if condition="$cld.ctype eq 1">
+    <a class="list-group-item" href="javascript:_MP('{:U('news/add',array('catid'=>$cld['id']))}')"><i class="fa fa-chevron-right"></i>{$cld.cate_name}</a>
+    <else />
+    <a class="list-group-item" href="javascript:_MP('{:U('news/lists',array('catid'=>$cld['id']))}')"><i class="fa fa-chevron-right"></i>{$cld.cate_name}</a>
+    </if>
     </volist>
 </div>
+</volist>

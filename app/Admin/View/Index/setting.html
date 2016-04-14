@@ -1,78 +1,40 @@
 <include file="Public:header" />
 <div class="container-fluid">
-    <form role="form" class="d-form form-horizontal" enctype="multipart/form-data" action="" method="post">
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="site_url">网站域名</label>
-            <div class="col-md-10">
-                <input class="form-control input-wdh350" id="site_url" type="text" name="site_url" value="{$setting.site_url}" placeholder="网站域名"/>
-                <p class="help-block">网站地址必须以http:// 开头 / 斜杠结尾</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="site_name">网站名称</label>
-            <div class="col-md-10">
-                <input class="form-control" id="site_name" type="text" name="site_name" value="{$setting.site_name}" placeholder="网站名称" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="logo">网站LOGO</label>
-            <div class="col-md-10">
-                <input type="file" name="logo_file" />
-                <div class="help-block"><img class="site-logo" src="{$setting.logo}" />
-            </div>
-             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="title">ICP备案号</label>
-            <div class="col-md-10">
-                <input class="form-control" id="title" type="text" name="icp" value="{$setting.icp}" placeholder="ICP备案号" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="site_close">网站关闭</label>
-            <div class="col-md-10">
-                <label class="radio-inline"><input type="radio" name="site_close" value="1" checked="checked" />开启</label>
-                <label class="radio-inline"><input type="radio" name="site_close" value="0" />关闭</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="close_reason">关闭原因</label>
-            <div class="col-md-10">
-                <textarea class="form-control input-wdh350" id="close_reason" name="close_reason" placeholder="关闭原因">{$setting.close_reason}</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="gzip">Gzip压缩</label>
-            <div class="col-md-10">
-                <label class="radio-inline"><input type="radio" name="gzip" value="1" checked="checked" />开启</label>
-                <label class="radio-inline"><input type="radio" name="gzip" value="0" />关闭</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">统计代码</label>
-            <div class="col-md-10">
-                <textarea class="form-control input-wdh350" name="statistics" value="{$setting.statistics}" placeholder="统计代码"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">网站描述</label>
-            <div class="col-md-10">
-                <textarea class="form-control input-wdh350" name="description" value="{$setting.description}" placeholder="网站描述"></textarea>
-                <div class="help-block">网站搜索引擎描述</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">网站关键词</label>
-            <div class="col-md-10">
-                <textarea class="form-control input-wdh350" name="keyword" value="{$setting.keyword}" placeholder="网站关键词"></textarea>
-                <div class="help-block">网站搜索引擎关键字</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">确定</button>
-            </div>
-        </div>
+    <form role="form" class="d-form form-horizontal" action="" method="post">
+    <input type="hidden" name="id" value="{$setting.config_id}">
+    <div class="ui-form">
+        <h3>网站参数设置 </h3>
+        <dl>
+            <dt>网站名称</dt>
+            <dd>
+                <div class="fbox">
+                    <input class="form-control input-wdh350" type="text" name="config_title" value="{$setting.config_title}" placeholder="网站名称" />
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>网站域名</dt>
+            <dd>
+                <div class="fbox">
+                    <input class="form-control input-wdh350" type="text" name="config_url" value="{$setting.config_url}" placeholder="网站域名"/>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>关键词</dt>
+            <dd>
+                <div class="fbox">
+                    <input class="form-control input-wdh350" type="text" name="index_key" value="{$setting.index_key}" placeholder="关键词"/>
+                    <span class="tips">多个关键词请用竖线|隔开，建议3到4个关键词。</span>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>描述</dt>
+            <dd><textarea class="form-control" name="index_des" placeholder="描述" style="width:500px;height:120px;">{$setting.index_des}</textarea></dd>
+        </dl>
+        <dl><dt></dt><dd><button type="submit" class="btn btn-blue">保存</button></dd></dl>
+    </div>
     </form>
 </div>
 <include file="Public:footer" />

@@ -4,26 +4,17 @@
 <meta charset="utf-8" />
 <title>后台管理</title>
 <link rel="stylesheet" href="__STATIC__/css/bootstrap.css">
+<link rel="stylesheet" href="__STATIC__/css/font-awesome.min.css">
 <link rel="stylesheet" href="__STATIC__/css/admin.css">
-<link rel="stylesheet" href="__STATIC__/css/ui-dialog.css">
 <script src="__STATIC__/js/jquery.js"></script>
-<script src="__STATIC__/js/dialog-min.js"></script>
-<script src="__STATIC__/js/jquery.validate.js"></script>
-<script src="__STATIC__/js/jquery.form.js"></script>
-
 </head>
 <body>
 <div class="navbar navbar-inverse" style="border-radius:0" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">中国勘测联合网 <small>v1.0 Bate</small></a>
+          <a class="navbar-brand" href="./">广东邦鑫勘测科技股份有限公司 <small>v1.0 Bate</small></a>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <volist name="topmenu" id="tmu">
-            <li id="mp{$tmu.id}" onclick="tabMenu({$tmu.id})" <eq name="tmu.id" value="$Think.get.menuid">class="active"</eq>><a href="javascript:void(0);">{$tmu.name}</a></li>
-            </volist>
-          </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a class="glyphicon glyphicon-user"><span>{$Think.session.userinfo.username}</span></a></li>
             <li><a class="glyphicon glyphicon-envelope" href="#"></a></li>
@@ -52,33 +43,11 @@ var set_h = function(){
 $(window).resize(function(){
     set_h();
 });
-function tabMenu(menuid){
-    $('#mp'+menuid).addClass('active').siblings().removeClass('active');
-    $.get('index.php?m=admin&c=index&a=left_menu',{menuid:menuid},function(data){
-        $('.col-sidebar').html(data);
-    });
-}
 //侧边菜单跳转
-function _MP(menuid,targetUrl) {
-  $("#menuid").val(menuid);
-  $(".col-main #rframe").attr('src', targetUrl+'&menuid='+menuid);
-  $('#mp'+menuid).addClass('active').siblings().removeClass('active');
+function _MP(targetUrl) {
+  $(".col-main #rframe").attr('src', targetUrl);
 }
 set_h();
-tabMenu(1);
-/*$(function(){
-    //侧边菜单收缩
-    $('.col-sidebar h5').on('click',function(){
-        var that=$(this);
-        var spn=that.children('span');
-        $(this).next('.list-group').slideToggle(function(){
-            if(that.next('.list-group').is(':hidden'))
-                spn.attr('class','glyphicon glyphicon-chevron-right');
-            else
-                spn.attr('class','glyphicon glyphicon-chevron-down');
-        });
-    })
-});*/
 
 function complate(result){
     var did=result.dialog ? result.dialog : 'dialogid';
@@ -89,6 +58,19 @@ function complate(result){
     },2000);
     if(result.status==1) rframe.location.reload();
 }
+$(function(){
+    $('.col-sidebar .list-group-item').on('click',function(){
+        $('.col-sidebar .list-group-item').removeClass('list-group-selected');
+        $(this).addClass('list-group-selected');
+    })
+    $('.col-sidebar h5').on('click',function(){
+        $(this).next('.list-group').slideDown(function(){
+            $(this).prev('h5').css({'background':'#22282E','border-bottom':'none'}).find('i').attr('class','fa fa-caret-down');
+        }).siblings('.list-group').slideUp(function(){
+            $(this).prev('h5').css({'background':'#37424F','border-bottom':'1px solid #414d5c'}).find('i').attr('class','fa fa-caret-right');
+        });
+    }).eq(0).trigger('click');
+});
 </script>
 </body>
 </html>
