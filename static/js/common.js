@@ -49,15 +49,17 @@ function demo_toggle(obj)
         alert('请求地址不正确');
         return false;
     }
-    //选择不对的图标
-    if(icon.hasClass('glyphicon-eye-open') || icon.hasClass('glyphicon-eye-close')){
-        var c=['glyphicon-eye-close','glyphicon-eye-open'];
-    }else{
-        var c=['glyphicon-remove','glyphicon-ok']
-    }
     $.getJSON($(obj).attr('d-uri'),{'val':val},function(data){
         if(data.status==true){
-            icon.attr('class','glyphicon '+c[data.rel.state]);
+            if(icon.is('.glyphicon-eye-open')){
+                icon.removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close');
+            }else if(icon.is('.glyphicon-eye-close')){
+                icon.removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open');
+            }else if(icon.is('.glyphicon-ok')){
+                icon.removeClass('glyphicon-ok').addClass('glyphicon-remove');
+            }else if(icon.is('.glyphicon-remove')){
+                icon.removeClass('glyphicon-remove').addClass('glyphicon-ok');
+            }
             that.attr('d-val',1-val);
         }else
             alert('操作失败！');
