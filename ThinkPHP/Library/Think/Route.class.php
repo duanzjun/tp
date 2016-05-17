@@ -13,7 +13,7 @@ namespace Think;
  * ThinkPHP路由解析类
  */
 class Route {
-    
+
     // 路由检测
     public static function check(){
         $depr   =   C('URL_PATHINFO_DEPR');
@@ -27,8 +27,8 @@ class Route {
         if(isset($maps[$regx])) {
             $var    =   self::parseUrl($maps[$regx]);
             $_GET   =   array_merge($var, $_GET);
-            return true;                
-        }        
+            return true;
+        }
         // 动态路由处理
         $routes =   C('URL_ROUTE_RULES');
         if(!empty($routes)) {
@@ -37,6 +37,7 @@ class Route {
                     // 支持 array('rule','adddress',...) 定义路由
                     $rule   =   array_shift($route);
                 }
+
                 if(is_array($route) && isset($route[2])){
                     // 路由参数
                     $options    =   $route[2];
@@ -44,7 +45,7 @@ class Route {
                         // URL后缀检测
                         continue;
                     }
-                    if(isset($options['method']) && REQUEST_METHOD != $options['method']){
+                    if(isset($options['method']) && REQUEST_METHOD != strtoupper($options['method'])){
                         // 请求类型检测
                         continue;
                     }
@@ -53,7 +54,7 @@ class Route {
                         if(false === call_user_func($options['callback'])) {
                             continue;
                         }
-                    }                    
+                    }
                 }
                 if(0===strpos($rule,'/') && preg_match($rule,$regx,$matches)) { // 正则路由
                     if($route instanceof \Closure) {
@@ -97,12 +98,12 @@ class Route {
     private static function checkUrlMatch($regx,$rule) {
         $m1 = explode('/',$regx);
         $m2 = explode('/',$rule);
-        $var = array();         
+        $var = array();
         foreach ($m2 as $key=>$val){
             if(0 === strpos($val,'[:')){
                 $val    =   substr($val,1,-1);
             }
-                
+
             if(':' == substr($val,0,1)) {// 动态变量
                 if($pos = strpos($val,'|')){
                     // 使用函数过滤
@@ -181,10 +182,10 @@ class Route {
                 $item   =   substr($item,1,-1);
             }
             if(0===strpos($item,':')) { // 动态变量获取
-                if($pos = strpos($item,'|')){ 
+                if($pos = strpos($item,'|')){
                     // 支持函数过滤
                     $fun  =  substr($item,$pos+1);
-                    $item =  substr($item,0,$pos);                    
+                    $item =  substr($item,0,$pos);
                 }
                 if($pos = strpos($item,'^') ) {
                     $var  =  substr($item,1,$pos-1);
@@ -227,7 +228,7 @@ class Route {
                     $params     =   $route[1];
                 }else{
                     parse_str($route[1],$params);
-                }                
+                }
                 $var   =   array_merge($var,$params);
             }
             $_GET   =  array_merge($var,$_GET);
@@ -246,7 +247,7 @@ class Route {
     private static function parseRegex($matches,$route,$regx) {
         // 获取路由地址规则
         $url   =  is_array($route)?$route[0]:$route;
-        $url   =  preg_replace_callback('/:(\d+)/', function($match) use($matches){return $matches[$match[1]];}, $url); 
+        $url   =  preg_replace_callback('/:(\d+)/', function($match) use($matches){return $matches[$match[1]];}, $url);
         if(0=== strpos($url,'/') || 0===strpos($url,'http')) { // 路由重定向跳转
             header("Location: $url", true,(is_array($route) && isset($route[1]))?$route[1]:301);
             exit;

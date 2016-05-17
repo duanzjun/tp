@@ -9,7 +9,7 @@ return array(
     'DB_PORT' => 3306,
     'DB_PREFIX' => 'tp_',
 
-    'URL_MODEL' => 0,
+    'URL_MODEL' => 1,
     'USER_AUTH_ON' => true, //是否需要认证
     'USER_AUTH_TYPE' => 1, //认证类型 1 登录认证 2 实时认证
     'USER_AUTH_KEY' => 'authId', //认证识别号
