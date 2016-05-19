@@ -85,10 +85,42 @@ class NewsController extends AdminController
 
     public function lists()
     {
-        $news_mod = M('News');
+
         $catid = I('catid',0,'intval');
-        $lists = $news_mod->where('cateid = '.$catid)->order('id DESC')->page(I('get.p',0,'intval').',15')->select();
-        $count=$news_mod->count();
+        $p = I('get.p',0,'intval');
+        $cate = D('Categories')->where('id = '.$catid)->find();
+
+        if(empty($cate)){
+            $this->error('分类不存在');
+        }
+        switch($cate['module']){
+            case 1:  //产品模型
+                $pro_mod = M('Products');
+                $lists = $pro_mod->where('cateid = '.$cate['id'])->order('id DESC')->page("$p,15")->select();
+                $count = $pro_mod->count();
+                break;
+            case 2:  //下载模型
+                $down_mod = M('Downloads');
+                $lists = $down_mod->where('cateid = '.$cate['id'])->order('id DESC')->page("$p,15")->select();
+                $count = $down_mod->count();
+                break;
+            case 3:  //图片模型
+                $pic_mod = M('Pictures');
+                $lists = $pic_mod->where('cateid = '.$cate['id'])->order('id DESC')->page("$p,15")->select();
+                $count = $pic_mod->count();
+                break;
+            case 4:  //视频模型
+                $video_mod = M('Videos');
+                $lists = $video_mod->where('cateid = '.$cate['id'])->order('id DESC')->page("$p,15")->select();
+                $count = $video_mod->count();
+                break;
+            default:  //新闻模型
+                $news_mod = M('News');
+                $lists = $news_mod->where('cateid = '.$cate['id'])->order('id DESC')->page("$p,15")->select();
+                $count=$news_mod->count();
+                break;
+        }
+
         $Page=new \Think\Page($count,15);
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');

@@ -57,11 +57,12 @@ class AdminController extends Controller
     public function menuCate()
     {
         $cate_mod = M('Categories');
-        $lists = $cate_mod->order('order_sort ASC')->select();
+        $lists = $cate_mod->order('pid ASC,order_sort ASC')->select();
+        if(empty($lists)) return false;
         $cate = array();
         foreach($lists as $val)
         {
-            if($val['pid'] == 0){
+            if($val['pid'] == 0 && !isset($cate[$val['id']])){
                 $cate[$val['id']] = $val;
             }else{
                 $cate[$val['pid']]['child'][] = $val;

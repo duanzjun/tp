@@ -24,10 +24,10 @@ class IndexController extends AdminController
             'mysql_version' => $this->_mysql_version(),
             'mysql_size' => $this->_mysql_db_size(),
         );
-        $userinfo=$_SESSION['userinfo'];
-        $userinfo['role_name']=M('Role')->where('id='.$userinfo['role'])->getField('name');
+        // $userinfo=$_SESSION['userinfo'];
+        // $userinfo['role_name']=M('Role')->where('id='.$userinfo['role'])->getField('name');
         $this->assign('sys_info',$sys_info);
-        $this->assign('user',$userinfo);
+        // $this->assign('user',$userinfo);
         $this->display();
     }
 

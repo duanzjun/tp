@@ -1,7 +1,7 @@
 <?php
 return array(
     'DB_TYPE' => 'mysqli',
-    // 'DB_HOST' => '192.168.2.222',
+    // 'DB_HOST' => '192.168.1.222',
     'DB_HOST' => 'localhost',
     'DB_NAME' => 'tp',
     'DB_USER' => 'root',
@@ -9,7 +9,7 @@ return array(
     'DB_PORT' => 3306,
     'DB_PREFIX' => 'tp_',
 
-    'URL_MODEL' => 1,
+    'URL_MODEL' => 0,
     'USER_AUTH_ON' => true, //是否需要认证
     'USER_AUTH_TYPE' => 1, //认证类型 1 登录认证 2 实时认证
     'USER_AUTH_KEY' => 'authId', //认证识别号

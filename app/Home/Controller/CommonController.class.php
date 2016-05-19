@@ -5,7 +5,7 @@ class CommonController extends Controller
 {
     function _initialize()
     {
-        $nav=M('category')->where('pid=0')->order('order_sort')->select();
+        $nav=M('categories')->where('pid=0')->order('order_sort')->select();
         $this->assign('nav',$nav);
         // // $rbac = new \Org\Util\Rbac;
         // import('@.ORG.Util.Rbac');

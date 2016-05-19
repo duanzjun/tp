@@ -26,6 +26,19 @@
             </dd>
         </dl>
         <dl>
+            <dt>封面图</dt>
+            <dd>
+                <div class="fbox upload-pic" <notempty name="list.thumb">style="background:url({$list['thumb']});background-size:150px 150px"</notempty>>
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-picture"></i>
+                            <span>上传图片</span>
+                            <input type="file" tabindex="-1" name="files" id="fileupload">
+                    </span>
+                    <input type="hidden" value="{$list.thumb}" name="thumb">
+                </div>
+            </dd>
+        </dl>
+        <dl>
             <dt>内容</dt>
             <dd>
                 <div class="fbox">
@@ -40,7 +53,21 @@
 <link href="__STATIC__/js/ueditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 <script charset="utf-8" src="__STATIC__/js/ueditor/umeditor.config.js"></script>
 <script charset="utf-8" src="__STATIC__/js/ueditor/umeditor.min.js"></script>
+<script src="__STATIC__/js/modules/sea.js"></script>
 <script>
 var um = UM.getEditor('myEditor');
+seajs.use('fileupload',function(){
+    $('#fileupload').fileupload({
+        url: "{:U('news/ajaxUpload')}",
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('.upload-pic').css({'background':'url("'+file.url+'") no-repeat','background-size':'150px 150px'});
+                $('input[name="thumb"]').val(file.url);
+            });
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+})
 </script>
 <include file="footer" />

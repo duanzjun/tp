@@ -7,9 +7,9 @@ class CategoriesModel extends Model
     var $_module = array(
         0 => '新闻模型',
         1 => '产品模型',
-        3 => '下载模型',
-        4 => '图片模型',
-        5 => '视频模型'
+        2 => '下载模型',
+        3 => '图片模型',
+        4 => '视频模型'
     );
     var $_type = array(
         0 => '分类目录',

@@ -24,7 +24,7 @@
         <td>{$_module[$list['module']]}</td>
         <td><select class="form-control" name="nav[{$list.id}]">
             <volist name="_nav" id="nav">
-            <option value="{$key}">{$nav}</option>
+            <option value="{$key}" <eq name="list['nav']" value="$key">selected="selected"</eq>>{$nav}</option>
             </volist>
         </select></td>
         <td class="text-right"><a dia-type="dialog" dia-title="添加【{$list.cate_name}】子栏目" dia-uri="{:U('categories/add',array('id'=>$list['id']))}" dia-width="450" href="javascript:;">添加子栏目</a> | <a class="confirmurl" data-msg="你确定删除【'.$list['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="{:U('categories/del',array('id'=>$list['id']))}" href="#">删除</a></td>
@@ -38,7 +38,7 @@
         <td>{$_module[$child['module']]}</td>
         <td><select class="form-control" name="nav[{$child.id}]">
             <volist name="_nav" id="nav">
-            <option value="{$key}">{$nav}</option>
+            <option value="{$key}"  <eq name="child['nav']" value="$key">selected="selected"</eq>>{$nav}</option>
             </volist>
         </select></td>
         <td class="text-right"><a class="confirmurl" data-msg="你确定删除【'.$cate['cate_name'].'】吗？'."\n".'不能删除有子级的内容！" data-uri="{:U('categories/del',array('id'=>$cate['id']))}" href="#">删除</a></td>
